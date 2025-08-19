@@ -305,7 +305,7 @@ body {
 }
 
 .btn-view-site {
-    background: #03B200;
+    background: #06B300;
     color: #000;
     padding: 10px 18px;
     border-radius: 8px;
@@ -569,7 +569,7 @@ body {
 }
 
 .btn-payout:hover {
-    background: #00cc00;
+    background: #025902;
     transform: translateY(-2px);
 }
 
