@@ -49,19 +49,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="<?php echo URLROOT; ?>/admin/payouts" class="nav-link">
                             <span class="nav-icon">💰</span>
                             <span class="nav-text">Payouts</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link">
-                            <span class="nav-icon">🔔</span>
-                            <span class="nav-text">Refund Requests</span>
-                            <span class="badge">5</span>
+                        <a href="<?php echo URLROOT; ?>/admin/refunds" class="nav-link">
+                        <span class="nav-icon">🔔</span>
+                        <span class="nav-text">Refund Requests</span>
+                        <span class="badge">5</span>
                         </a>
                     </li>
-                </ul>
             </nav>
             
             <div class="sidebar-footer">
