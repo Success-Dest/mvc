@@ -56,7 +56,7 @@
                     <div class="message-avatar">J</div>
                     <div class="message-preview">
                         <div class="message-header">
-                            <span class="sender-name">John Doe</span>
+                            <span class="sender-name">Krishna Wishvajith</span>
                             <span class="message-time">2:30 PM</span>
                         </div>
                         <div class="message-subject">Booking Cancellation Request</div>
@@ -69,7 +69,7 @@
                     <div class="message-avatar">S</div>
                     <div class="message-preview">
                         <div class="message-header">
-                            <span class="sender-name">Stadium Owner 1</span>
+                            <span class="sender-name">University Of Colombo</span>
                             <span class="message-time">1:15 PM</span>
                         </div>
                         <div class="message-subject">Payout Inquiry</div>
@@ -82,7 +82,7 @@
                     <div class="message-avatar">M</div>
                     <div class="message-preview">
                         <div class="message-header">
-                            <span class="sender-name">Mike Wilson</span>
+                            <span class="sender-name">Kalana Ekanayake</span>
                             <span class="message-time">11:45 AM</span>
                         </div>
                         <div class="message-subject">Equipment Rental Issue</div>
@@ -136,7 +136,7 @@
             <div class="conversation-thread">
                 <div class="message-bubble received">
                     <div class="message-info">
-                        <span class="sender">John Doe</span>
+                        <span class="sender">Krishna Wishvajith</span>
                         <span class="timestamp">Today at 2:30 PM</span>
                     </div>
                     <div class="message-text">
@@ -154,8 +154,8 @@
                         <span class="timestamp">Today at 2:35 PM</span>
                     </div>
                     <div class="message-text">
-                        Hi John,<br><br>
-                        I've received your cancellation request for booking #BK0045. Since it's more than 24 hours before your booking time, 
+                        Hi Krishna,<br><br>
+                        I've received your cancellation request for booking #BK0045. Since it's more than 6 hours before your booking time, 
                         you're eligible for a full refund according to our policy.<br><br>
                         I'll process the cancellation and refund now. You should see the refund in your account within 3-5 business days.
                     </div>
@@ -163,7 +163,7 @@
 
                 <div class="message-bubble received">
                     <div class="message-info">
-                        <span class="sender">John Doe</span>
+                        <span class="sender">Krishna Wishvajith</span>
                         <span class="timestamp">Today at 2:40 PM</span>
                     </div>
                     <div class="message-text">
