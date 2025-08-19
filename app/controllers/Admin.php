@@ -197,5 +197,98 @@ class Admin extends Controller {
 
         $this->view('admin/v_refunds', $data);
     }
+
+    public function advertisements() {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            $this->login();
+            return;
+        }
+
+        $data = [
+            'title' => 'Advertisement Management',
+            'pending_ads' => [
+                ['id' => 1, 'company' => 'Sport Gear Lanka', 'contact' => 'John Silva', 'email' => 'john@sportgear.lk', 'phone' => '0712345678', 'amount' => 15000, 'status' => 'Payment Pending', 'submitted' => '2025-08-19'],
+                ['id' => 2, 'company' => 'Fitness Pro', 'contact' => 'Sarah Fernando', 'email' => 'sarah@fitnesspro.lk', 'phone' => '0773456789', 'amount' => 20000, 'status' => 'Payment Submitted', 'submitted' => '2025-08-18'],
+                ['id' => 3, 'company' => 'Athletic Store', 'contact' => 'Mike Perera', 'email' => 'mike@athletic.lk', 'phone' => '0765432100', 'amount' => 12000, 'status' => 'Verified', 'submitted' => '2025-08-17']
+            ],
+            'published_ads' => [
+                ['id' => 1, 'company' => 'Nike Lanka', 'type' => 'Image', 'published' => '2025-08-15', 'expires' => '2025-09-15', 'status' => 'Active'],
+                ['id' => 2, 'company' => 'Adidas Store', 'type' => 'Video', 'published' => '2025-08-10', 'expires' => '2025-09-10', 'status' => 'Active']
+            ]
+        ];
+
+        $this->view('admin/v_advertisements', $data);
+    }
+
+    public function faq() {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            $this->login();
+            return;
+        }
+
+        $data = [
+            'title' => 'FAQ Management',
+            'faqs' => [
+                ['id' => 1, 'question' => 'How do I book a stadium?', 'answer' => 'You can book a stadium by browsing our available venues, selecting your preferred date and time, and completing the payment process.', 'category' => 'Booking', 'status' => 'Published', 'updated' => '2025-08-15'],
+                ['id' => 2, 'question' => 'What is your cancellation policy?', 'answer' => 'Cancellations made 24 hours before the booking time are eligible for full refund. Cancellations within 24 hours may incur charges.', 'category' => 'Policies', 'status' => 'Published', 'updated' => '2025-08-12'],
+                ['id' => 3, 'question' => 'Do you provide sports equipment?', 'answer' => 'Yes, we offer equipment rental services for various sports including cricket, football, basketball, and tennis.', 'category' => 'Equipment', 'status' => 'Published', 'updated' => '2025-08-10']
+            ]
+        ];
+
+        $this->view('admin/v_faq', $data);
+    }
+
+    public function blog() {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            $this->login();
+            return;
+        }
+
+        $data = [
+            'title' => 'Blog Management',
+            'posts' => [
+                ['id' => 1, 'title' => 'Top 10 Cricket Grounds in Colombo', 'author' => 'Admin', 'category' => 'Cricket', 'status' => 'Published', 'published' => '2025-08-18', 'views' => 1250],
+                ['id' => 2, 'title' => 'Football Training Tips for Beginners', 'author' => 'Coach Mike', 'category' => 'Football', 'status' => 'Draft', 'published' => '', 'views' => 0],
+                ['id' => 3, 'title' => 'Benefits of Playing Tennis', 'author' => 'Dr. Silva', 'category' => 'Tennis', 'status' => 'Published', 'published' => '2025-08-15', 'views' => 980]
+            ]
+        ];
+
+        $this->view('admin/v_blog', $data);
+    }
+
+    public function contact() {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            $this->login();
+            return;
+        }
+
+        $data = [
+            'title' => 'Contact Page Management',
+            'contact_info' => [
+                'main_phone' => '(071) 111 1111',
+                'support_phone' => '(071) 222 2222',
+                'email' => 'support@bookmyground.lk',
+                'support_email' => 'help@bookmyground.lk',
+                'address' => '4200 Reid Avenue, Colombo 07',
+                'working_hours' => 'Monday - Sunday: 6:00 AM - 10:00 PM',
+                'emergency_contact' => '(071) 999 9999'
+            ]
+        ];
+
+        $this->view('admin/v_contact', $data);
+    }
 }
+
 ?>
+
+
+
+

@@ -56,9 +56,34 @@
                     </li>
                     <li>
                         <a href="<?php echo URLROOT; ?>/admin/refunds" class="nav-link">
-                        <span class="nav-icon">🔔</span>
-                        <span class="nav-text">Refund Requests</span>
-                        <span class="badge">5</span>
+                            <span class="nav-icon">🔔</span>
+                            <span class="nav-text">Refund Requests</span>
+                            <span class="badge">5</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo URLROOT; ?>/admin/advertisements" class="nav-link">
+                            <span class="nav-icon">📢</span>
+                            <span class="nav-text">Advertisements</span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo URLROOT; ?>/admin/faq" class="nav-link">
+                            <span class="nav-icon">❓</span>
+                            <span class="nav-text">FAQ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo URLROOT; ?>/admin/blog" class="nav-link">
+                            <span class="nav-icon">📝</span>
+                            <span class="nav-text">Blog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo URLROOT; ?>/admin/contact" class="nav-link">
+                            <span class="nav-icon">📞</span>
+                            <span class="nav-text">Contact</span>
                         </a>
                     </li>
             </nav>
