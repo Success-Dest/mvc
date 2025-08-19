@@ -248,7 +248,7 @@
         <div class="submissions-list">
             <div class="submission-item">
                 <div class="submission-info">
-                    <h4>John Silva</h4>
+                    <h4>Janaka Rathnayake</h4>
                     <p>john.silva@email.com</p>
                     <small>Inquiry about stadium booking - 2 hours ago</small>
                 </div>
@@ -256,15 +256,15 @@
             </div>
             <div class="submission-item">
                 <div class="submission-info">
-                    <h4>Sarah Perera</h4>
-                    <p>sarah@company.lk</p>
+                    <h4>Sarath Perera</h4>
+                    <p>sarath@company.lk</p>
                     <small>Equipment rental question - 5 hours ago</small>
                 </div>
                 <div class="submission-status read">Read</div>
             </div>
             <div class="submission-item">
                 <div class="submission-info">
-                    <h4>Mike Fernando</h4>
+                    <h4>Pallavi Gunasekara</h4>
                     <p>mike.f@gmail.com</p>
                     <small>Coaching session inquiry - 1 day ago</small>
                 </div>

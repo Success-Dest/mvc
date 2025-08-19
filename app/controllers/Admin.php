@@ -26,13 +26,13 @@ class Admin extends Controller {
             'pending_refunds' => 5,
             'active_stadiums' => 45,
             'recent_bookings' => [
-                ['id' => 1, 'stadium' => 'Colombo Cricket Ground', 'customer' => 'John Doe', 'amount' => 5000, 'date' => '2025-08-19'],
-                ['id' => 2, 'stadium' => 'Football Arena Pro', 'customer' => 'Jane Smith', 'amount' => 7500, 'date' => '2025-08-18'],
-                ['id' => 3, 'stadium' => 'Tennis Academy Courts', 'customer' => 'Mike Wilson', 'amount' => 2500, 'date' => '2025-08-18']
+                ['id' => 1, 'stadium' => 'University Of Colombo Grounds', 'customer' => 'Kulakshi Thathsarani', 'amount' => 5000, 'date' => '2025-08-19'],
+                ['id' => 2, 'stadium' => 'Dehiwala Indoor Lanka Court 1', 'customer' => 'Dinesh Sulakshana', 'amount' => 7500, 'date' => '2025-08-18'],
+                ['id' => 3, 'stadium' => 'Tennis Academy Pannipitiya Courts', 'customer' => 'Kalana Ekanayake', 'amount' => 2500, 'date' => '2025-08-18']
             ],
             'pending_payouts_list' => [
-                ['owner' => 'Stadium Owner 1', 'stadium' => 'Colombo Cricket Ground', 'amount' => 4000, 'commission' => 1000],
-                ['owner' => 'Stadium Owner 2', 'stadium' => 'Football Arena Pro', 'amount' => 6000, 'commission' => 1500]
+                ['owner' => 'University Of Colombo', 'stadium' => 'University Of Colombo Basket Ball Court', 'amount' => 4000, 'commission' => 1000],
+                ['owner' => 'Dehiwala Indoor Lanka', 'stadium' => 'Dehiwala Indoor Lanka Court 1', 'amount' => 6000, 'commission' => 1500]
             ]
         ];
 
@@ -81,11 +81,11 @@ class Admin extends Controller {
         $data = [
             'title' => 'User Management',
             'users' => [
-                ['id' => 1, 'name' => 'John Doe', 'email' => 'john@example.com', 'role' => 'Customer', 'status' => 'Active'],
-                ['id' => 2, 'name' => 'Stadium Owner 1', 'email' => 'owner1@example.com', 'role' => 'Stadium Owner', 'status' => 'Active'],
-                ['id' => 3, 'name' => 'Coach Mike', 'email' => 'coach@example.com', 'role' => 'Coach', 'status' => 'Active'],
-                ['id' => 4, 'name' => 'Rental Owner Alex', 'email' => 'rental@example.com', 'role' => 'Rental Owner', 'status' => 'Active'],
-                ['id' => 5, 'name' => 'Jane Smith', 'email' => 'jane@example.com', 'role' => 'Customer', 'status' => 'Inactive']
+                ['id' => 1, 'name' => 'Kulakshi Thathsarani', 'email' => 'john@example.com', 'role' => 'Customer', 'status' => 'Active'],
+                ['id' => 2, 'name' => 'University Of Colombo', 'email' => 'owner1@example.com', 'role' => 'Stadium Owner', 'status' => 'Active'],
+                ['id' => 3, 'name' => 'Dinesh Sulakshana', 'email' => 'coach@example.com', 'role' => 'Coach', 'status' => 'Active'],
+                ['id' => 4, 'name' => 'Kalana Ekanayake', 'email' => 'rental@example.com', 'role' => 'Rental Owner', 'status' => 'Active'],
+                ['id' => 5, 'name' => 'Kamal Jayasooriya', 'email' => 'jane@example.com', 'role' => 'Customer', 'status' => 'Inactive']
             ]
         ];
 
@@ -103,11 +103,11 @@ class Admin extends Controller {
         $data = [
             'title' => 'Booking Management',
             'bookings' => [
-                ['id' => 1, 'stadium' => 'Colombo Cricket Ground', 'customer' => 'John Doe', 'date' => '2025-08-19', 'amount' => 5000, 'status' => 'Completed'],
-                ['id' => 2, 'stadium' => 'Football Arena Pro', 'customer' => 'Jane Smith', 'date' => '2025-08-20', 'amount' => 7500, 'status' => 'Pending'],
-                ['id' => 3, 'stadium' => 'Tennis Academy Courts', 'customer' => 'Mike Wilson', 'date' => '2025-08-18', 'amount' => 2500, 'status' => 'Completed'],
-                ['id' => 4, 'stadium' => 'Basketball Hub', 'customer' => 'Sarah Connor', 'date' => '2025-08-21', 'amount' => 4000, 'status' => 'Pending'],
-                ['id' => 5, 'stadium' => 'Multi-Purpose Arena', 'customer' => 'Tom Hardy', 'date' => '2025-08-17', 'amount' => 6000, 'status' => 'Refunded']
+                ['id' => 1, 'stadium' => 'University Of Colombo Football Court', 'customer' => 'Krishna Wishvajith', 'date' => '2025-08-19', 'amount' => 5000, 'status' => 'Completed'],
+                ['id' => 2, 'stadium' => 'Dehiwala Indoor Lanka Court 1', 'customer' => 'Kulakshi Thathsarani', 'date' => '2025-08-20', 'amount' => 7500, 'status' => 'Pending'],
+                ['id' => 3, 'stadium' => 'Tennis Academy Pannipitiya Court 1', 'customer' => 'Dinesh Sulakshana', 'date' => '2025-08-18', 'amount' => 2500, 'status' => 'Completed'],
+                ['id' => 4, 'stadium' => 'Basketball Hub Angoda', 'customer' => 'Kalana Ekanayake', 'date' => '2025-08-21', 'amount' => 4000, 'status' => 'Pending'],
+                ['id' => 5, 'stadium' => 'Multi-Purpose Courts Colombo 07', 'customer' => 'Kalana Ekanayake', 'date' => '2025-08-17', 'amount' => 6000, 'status' => 'Refunded']
             ]
         ];
 
@@ -143,10 +143,10 @@ class Admin extends Controller {
         $data = [
             'title' => 'Message Center',
             'messages' => [
-                ['id' => 1, 'from' => 'John Doe', 'subject' => 'Booking Cancellation Request', 'date' => '2025-08-19', 'status' => 'Unread'],
-                ['id' => 2, 'from' => 'Stadium Owner 1', 'subject' => 'Payout Question', 'date' => '2025-08-18', 'status' => 'Read'],
-                ['id' => 3, 'from' => 'Mike Wilson', 'subject' => 'Equipment Rental Issue', 'date' => '2025-08-17', 'status' => 'Priority'],
-                ['id' => 4, 'from' => 'Coach Sarah', 'subject' => 'Training Session Schedule', 'date' => '2025-08-16', 'status' => 'Read']
+                ['id' => 1, 'from' => 'Kulakshi Thathsarani', 'subject' => 'Booking Cancellation Request', 'date' => '2025-08-19', 'status' => 'Unread'],
+                ['id' => 2, 'from' => 'University Of Colombo', 'subject' => 'Payout Question', 'date' => '2025-08-18', 'status' => 'Read'],
+                ['id' => 3, 'from' => 'Krishna Wishvajith', 'subject' => 'Equipment Rental Issue', 'date' => '2025-08-17', 'status' => 'Priority'],
+                ['id' => 4, 'from' => 'Dinesh Sulakshana', 'subject' => 'Training Session Schedule', 'date' => '2025-08-16', 'status' => 'Read']
             ]
         ];
 
@@ -164,9 +164,9 @@ class Admin extends Controller {
         $data = [
             'title' => 'Payout Management',
             'pending_payouts' => [
-                ['owner' => 'Stadium Owner 1', 'stadium' => 'Colombo Cricket Ground', 'total_bookings' => 12, 'gross_amount' => 60000, 'commission' => 12000, 'net_payout' => 48000],
-                ['owner' => 'Stadium Owner 2', 'stadium' => 'Football Arena Pro', 'total_bookings' => 8, 'gross_amount' => 45000, 'commission' => 9000, 'net_payout' => 36000],
-                ['owner' => 'Tennis Academy', 'stadium' => 'Tennis Courts', 'total_bookings' => 15, 'gross_amount' => 37500, 'commission' => 7500, 'net_payout' => 30000]
+                ['owner' => 'University Of Colombo', 'stadium' => 'University Of Colombo Football Court', 'total_bookings' => 12, 'gross_amount' => 60000, 'commission' => 12000, 'net_payout' => 48000],
+                ['owner' => 'Dehiwala Indoor Lanka', 'stadium' => 'Dehiwala Indoor Lanka Footsal Court', 'total_bookings' => 8, 'gross_amount' => 45000, 'commission' => 9000, 'net_payout' => 36000],
+                ['owner' => 'Tennis Academy Pannipitiya', 'stadium' => 'Tennis Academy Tennis Court 1', 'total_bookings' => 15, 'gross_amount' => 37500, 'commission' => 7500, 'net_payout' => 30000]
             ],
             'completed_payouts' => [
                 ['owner' => 'Basketball Hub', 'amount' => 25000, 'date' => '2025-08-12', 'status' => 'Completed'],
@@ -188,10 +188,10 @@ class Admin extends Controller {
         $data = [
             'title' => 'Refund Requests',
             'refund_requests' => [
-                ['id' => 1, 'booking_id' => 'BK0032', 'customer' => 'John Doe', 'stadium' => 'Tennis Academy Courts', 'amount' => 2500, 'reason' => 'Weather conditions', 'date' => '2025-08-19', 'status' => 'Pending'],
-                ['id' => 2, 'booking_id' => 'BK0028', 'customer' => 'Sarah Wilson', 'stadium' => 'Football Arena Pro', 'amount' => 7500, 'reason' => 'Emergency cancellation', 'date' => '2025-08-18', 'status' => 'Pending'],
-                ['id' => 3, 'booking_id' => 'BK0025', 'customer' => 'Mike Johnson', 'stadium' => 'Basketball Hub', 'amount' => 4000, 'reason' => 'Double booking error', 'date' => '2025-08-17', 'status' => 'Approved'],
-                ['id' => 4, 'booking_id' => 'BK0022', 'customer' => 'Emma Davis', 'stadium' => 'Cricket Ground', 'amount' => 5000, 'reason' => 'Facility unavailable', 'date' => '2025-08-16', 'status' => 'Processed']
+                ['id' => 1, 'booking_id' => 'BK0032', 'customer' => 'Krishna Wishvajith', 'stadium' => 'Tennis Academy Courts', 'amount' => 2500, 'reason' => 'Weather conditions', 'date' => '2025-08-19', 'status' => 'Pending'],
+                ['id' => 2, 'booking_id' => 'BK0028', 'customer' => 'Kulakshi Thathsarani', 'stadium' => 'Football Arena Pro', 'amount' => 7500, 'reason' => 'Emergency cancellation', 'date' => '2025-08-18', 'status' => 'Pending'],
+                ['id' => 3, 'booking_id' => 'BK0025', 'customer' => 'Kalana Ekanayake', 'stadium' => 'Basketball Hub', 'amount' => 4000, 'reason' => 'Double booking error', 'date' => '2025-08-17', 'status' => 'Approved'],
+                ['id' => 4, 'booking_id' => 'BK0022', 'customer' => 'Dinesh Sulakshana', 'stadium' => 'Cricket Ground', 'amount' => 5000, 'reason' => 'Facility unavailable', 'date' => '2025-08-16', 'status' => 'Processed']
             ]
         ];
 
@@ -210,11 +210,11 @@ class Admin extends Controller {
             'title' => 'Advertisement Management',
             'pending_ads' => [
                 ['id' => 1, 'company' => 'Sport Gear Lanka', 'contact' => 'John Silva', 'email' => 'john@sportgear.lk', 'phone' => '0712345678', 'amount' => 15000, 'status' => 'Payment Pending', 'submitted' => '2025-08-19'],
-                ['id' => 2, 'company' => 'Fitness Pro', 'contact' => 'Sarah Fernando', 'email' => 'sarah@fitnesspro.lk', 'phone' => '0773456789', 'amount' => 20000, 'status' => 'Payment Submitted', 'submitted' => '2025-08-18'],
-                ['id' => 3, 'company' => 'Athletic Store', 'contact' => 'Mike Perera', 'email' => 'mike@athletic.lk', 'phone' => '0765432100', 'amount' => 12000, 'status' => 'Verified', 'submitted' => '2025-08-17']
+                ['id' => 2, 'company' => 'Kalana Lanka Pvt Ltd', 'contact' => 'Sarath Fernando', 'email' => 'sarath@kalanalanka.lk', 'phone' => '0773456789', 'amount' => 20000, 'status' => 'Payment Submitted', 'submitted' => '2025-08-18'],
+                ['id' => 3, 'company' => 'Sports Store', 'contact' => 'Kulassi Thathsarani', 'email' => 'thathsaranikulakshi@gmail.com', 'phone' => '0765432100', 'amount' => 12000, 'status' => 'Verified', 'submitted' => '2025-08-17']
             ],
             'published_ads' => [
-                ['id' => 1, 'company' => 'Nike Lanka', 'type' => 'Image', 'published' => '2025-08-15', 'expires' => '2025-09-15', 'status' => 'Active'],
+                ['id' => 1, 'company' => 'Nike Sri Lanka', 'type' => 'Image', 'published' => '2025-08-15', 'expires' => '2025-09-15', 'status' => 'Active'],
                 ['id' => 2, 'company' => 'Adidas Store', 'type' => 'Video', 'published' => '2025-08-10', 'expires' => '2025-09-10', 'status' => 'Active']
             ]
         ];
@@ -234,7 +234,7 @@ class Admin extends Controller {
             'title' => 'FAQ Management',
             'faqs' => [
                 ['id' => 1, 'question' => 'How do I book a stadium?', 'answer' => 'You can book a stadium by browsing our available venues, selecting your preferred date and time, and completing the payment process.', 'category' => 'Booking', 'status' => 'Published', 'updated' => '2025-08-15'],
-                ['id' => 2, 'question' => 'What is your cancellation policy?', 'answer' => 'Cancellations made 24 hours before the booking time are eligible for full refund. Cancellations within 24 hours may incur charges.', 'category' => 'Policies', 'status' => 'Published', 'updated' => '2025-08-12'],
+                ['id' => 2, 'question' => 'What is your cancellation policy?', 'answer' => 'Cancellations made 6 hours before the booking time are eligible for full refund. Cancellations within 24 hours may incur charges.', 'category' => 'Policies', 'status' => 'Published', 'updated' => '2025-08-12'],
                 ['id' => 3, 'question' => 'Do you provide sports equipment?', 'answer' => 'Yes, we offer equipment rental services for various sports including cricket, football, basketball, and tennis.', 'category' => 'Equipment', 'status' => 'Published', 'updated' => '2025-08-10']
             ]
         ];
@@ -254,8 +254,8 @@ class Admin extends Controller {
             'title' => 'Blog Management',
             'posts' => [
                 ['id' => 1, 'title' => 'Top 10 Cricket Grounds in Colombo', 'author' => 'Admin', 'category' => 'Cricket', 'status' => 'Published', 'published' => '2025-08-18', 'views' => 1250],
-                ['id' => 2, 'title' => 'Football Training Tips for Beginners', 'author' => 'Coach Mike', 'category' => 'Football', 'status' => 'Draft', 'published' => '', 'views' => 0],
-                ['id' => 3, 'title' => 'Benefits of Playing Tennis', 'author' => 'Dr. Silva', 'category' => 'Tennis', 'status' => 'Published', 'published' => '2025-08-15', 'views' => 980]
+                ['id' => 2, 'title' => 'Football Training Tips for Beginners', 'author' => 'Krishna Wishvajith', 'category' => 'Football', 'status' => 'Draft', 'published' => '', 'views' => 0],
+                ['id' => 3, 'title' => 'Benefits of Playing Tennis', 'author' => 'Dr. Dinesh', 'category' => 'Tennis', 'status' => 'Published', 'published' => '2025-08-15', 'views' => 980]
             ]
         ];
 
