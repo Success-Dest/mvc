@@ -2,7 +2,7 @@
 
 <div class="main-content">
     <div class="dashboard-header">
-        <h1>Content Management</h1>
+        <h1>Home Page Management</h1>
         <div class="content-actions">
             <button class="btn-save">Save Changes</button>
         </div>

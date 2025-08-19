@@ -2214,3 +2214,432 @@ body {
     max-width: 100%;
     border-radius: 8px;
 }
+
+
+
+
+.faq-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.faq-question strong {
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.faq-preview {
+    color: #888;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.category-badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.category-badge.booking { background: #007bff; color: white; }
+.category-badge.policies { background: #28a745; color: white; }
+.category-badge.equipment { background: #ffc107; color: #000; }
+.category-badge.payments { background: #6f42c1; color: white; }
+.category-badge.general { background: #17a2b8; color: white; }
+
+.btn-add-faq, .btn-add-category {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-unpublish {
+    background: #6c757d;
+    color: white;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 25px;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-info h4 {
+    color: #fff;
+    margin: 0 0 5px 0;
+}
+
+.category-info p {
+    color: #888;
+    margin: 0;
+    font-size: 14px;
+}
+
+.btn-save-faq {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+
+.blog-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.post-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.post-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-details h4 {
+    color: #fff;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.post-details p {
+    color: #888;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 30px;
+    height: 30px;
+    background: #00ff00;
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.category-badge.cricket { background: #28a745; color: white; }
+.category-badge.football { background: #007bff; color: white; }
+.category-badge.tennis { background: #ffc107; color: #000; }
+.category-badge.basketball { background: #dc3545; color: white; }
+.category-badge.general { background: #6c757d; color: white; }
+
+.status-badge.draft { background: #6c757d; color: white; }
+.status-badge.scheduled { background: #17a2b8; color: white; }
+
+.views-count {
+    color: #00ff00;
+    font-weight: 600;
+}
+
+.btn-new-post {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-preview {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-unpublish {
+    background: #6c757d;
+    color: white;
+}
+
+.activity-icon.published {
+    background: rgba(40, 167, 69, 0.2);
+}
+
+.activity-icon.draft {
+    background: rgba(108, 117, 125, 0.2);
+}
+
+.activity-icon.popular {
+    background: rgba(255, 193, 7, 0.2);
+}
+
+.activity-views {
+    color: #00ff00;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.modal-content.extra-large {
+    max-width: 900px;
+}
+
+.editor-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px 8px 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: none;
+}
+
+.editor-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.editor-btn:hover {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+}
+
+#postContent {
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+}
+
+.upload-text {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+.btn-save-post {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .blog-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .post-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .modal-content.extra-large {
+        max-width: 95%;
+        margin: 2% auto;
+    }
+    
+    .editor-toolbar {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.contact-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.contact-form {
+    padding: 25px;
+}
+
+.form-help {
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.edit-indicator {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.btn-save-contact, .btn-preview-contact {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.btn-preview-contact {
+    background: #17a2b8;
+    color: white;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.contact-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    padding: 25px;
+}
+
+.submissions-list {
+    padding: 25px;
+}
+
+.submission-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submission-item:last-child {
+    border-bottom: none;
+}
+
+.submission-info h4 {
+    color: #fff;
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.submission-info p {
+    color: #888;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.submission-info small {
+    color: #666;
+    font-size: 12px;
+}
+
+.submission-status {
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.submission-status.unread {
+    background: #ffc107;
+    color: #000;
+}
+
+.submission-status.read {
+    background: #6c757d;
+    color: white;
+}
+
+.submission-status.replied {
+    background: #28a745;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .submission-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
