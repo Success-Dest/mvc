@@ -2643,3 +2643,187 @@ body {
         gap: 10px;
     }
 }
+
+
+
+
+/* NEW: Advertisement Revenue Section Styles */
+.revenue-badge {
+    background: #00ff00;
+    color: #000;
+    padding: 6px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.ad-summary-content {
+    padding: 25px;
+}
+
+.active-ads-section, .pending-ads-section {
+    margin-bottom: 25px;
+}
+
+.active-ads-section h4, .pending-ads-section h4 {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.active-ads-section h4:before {
+    content: "🟢";
+    font-size: 14px;
+}
+
+.pending-ads-section h4:before {
+    content: "🟡";
+    font-size: 14px;
+}
+
+.active-ads-list, .pending-ads-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ad-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.ad-item.active {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: rgba(0, 255, 0, 0.2);
+}
+
+.ad-item.pending {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.2);
+}
+
+.ad-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ad-company {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.company-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00ff00, #00cc00);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.company-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.company-info small {
+    color: #888;
+    font-size: 12px;
+}
+
+.ad-revenue {
+    color: #00ff00;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.ad-revenue.pending {
+    color: #ffc107;
+}
+
+.ad-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-manage-ads {
+    background: #17a2b8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-manage-ads:hover {
+    background: #138496;
+    transform: translateY(-2px);
+}
+
+.btn-publish-pending {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-publish-pending:hover {
+    background: #00cc00;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ad-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .ad-company {
+        width: 100%;
+    }
+    
+    .ad-revenue {
+        align-self: flex-end;
+    }
+    
+    .ad-actions {
+        flex-direction: column;
+    }
+}

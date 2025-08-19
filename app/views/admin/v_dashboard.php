@@ -78,6 +78,88 @@
             </div>
         </div>
 
+        <!-- NEW: Advertisement Revenue Summary -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3>Advertisement Revenue</h3>
+                <span class="revenue-badge">LKR <?php echo number_format($data['ad_revenue_monthly'] ?? 47000); ?></span>
+            </div>
+            <div class="ad-summary-content">
+                <!-- Active Ads Display -->
+                <div class="active-ads-section">
+                    <h4>Currently Active (<?php echo $data['active_ads_count'] ?? 2; ?>)</h4>
+                    <div class="active-ads-list">
+                        <div class="ad-item active">
+                            <div class="ad-company">
+                                <div class="company-logo">N</div>
+                                <div class="company-info">
+                                    <span class="company-name">Nike Lanka</span>
+                                    <small>Expires: Sept 15</small>
+                                </div>
+                            </div>
+                            <div class="ad-revenue">LKR 25,000</div>
+                        </div>
+                        
+                        <div class="ad-item active">
+                            <div class="ad-company">
+                                <div class="company-logo">A</div>
+                                <div class="company-info">
+                                    <span class="company-name">Adidas Store</span>
+                                    <small>Expires: Sept 10</small>
+                                </div>
+                            </div>
+                            <div class="ad-revenue">LKR 22,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Ads -->
+                <div class="pending-ads-section">
+                    <h4>Pending Approval (<?php echo $data['pending_ads_count'] ?? 3; ?>)</h4>
+                    <div class="pending-ads-list">
+                        <div class="ad-item pending">
+                            <div class="ad-company">
+                                <div class="company-logo">S</div>
+                                <div class="company-info">
+                                    <span class="company-name">Sport Gear Lanka</span>
+                                    <small>Payment Pending</small>
+                                </div>
+                            </div>
+                            <div class="ad-revenue pending">LKR 15,000</div>
+                        </div>
+                        
+                        <div class="ad-item pending">
+                            <div class="ad-company">
+                                <div class="company-logo">F</div>
+                                <div class="company-info">
+                                    <span class="company-name">Fitness Pro</span>
+                                    <small>Payment Verified</small>
+                                </div>
+                            </div>
+                            <div class="ad-revenue pending">LKR 20,000</div>
+                        </div>
+                        
+                        <div class="ad-item pending">
+                            <div class="ad-company">
+                                <div class="company-logo">A</div>
+                                <div class="company-info">
+                                    <span class="company-name">Athletic Store</span>
+                                    <small>Ready to Publish</small>
+                                </div>
+                            </div>
+                            <div class="ad-revenue pending">LKR 12,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Ad Actions -->
+                <div class="ad-actions">
+                    <a href="<?php echo URLROOT; ?>/admin/advertisements" class="btn-manage-ads">Manage Ads</a>
+                    <button class="btn-publish-pending" onclick="publishPendingAds()">Publish Ready (2)</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Pending Payouts -->
         <div class="dashboard-card">
             <div class="card-header">
@@ -116,6 +198,16 @@
                     <button class="btn-action">Review</button>
                 </div>
                 
+                <!-- NEW: Advertisement Approvals Action -->
+                <div class="action-item">
+                    <span class="action-icon">📢</span>
+                    <div class="action-info">
+                        <h4>Advertisement Approvals</h4>
+                        <p><?php echo $data['pending_ads_count'] ?? 3; ?> awaiting approval</p>
+                    </div>
+                    <a href="<?php echo URLROOT; ?>/admin/advertisements" class="btn-action">Review</a>
+                </div>
+                
                 <div class="action-item">
                     <span class="action-icon">💬</span>
                     <div class="action-info">
@@ -137,5 +229,27 @@
         </div>
     </div>
 </div>
+
+<script>
+function publishPendingAds() {
+    if(confirm('Are you sure you want to publish all ready advertisements?')) {
+        alert('Publishing 2 pending advertisements...');
+        // Here you would make an AJAX call to publish the ads
+        setTimeout(() => {
+            alert('Advertisements published successfully!');
+            location.reload();
+        }, 1500);
+    }
+}
+
+// Auto-refresh advertisement data every 2 minutes
+setInterval(function() {
+    if (window.location.pathname.includes('/admin') && 
+        !window.location.pathname.includes('/admin/login')) {
+        // This would be replaced with actual AJAX call to refresh ad data
+        console.log('Refreshing advertisement data...');
+    }
+}, 120000); // 2 minutes
+</script>
 
 <?php require APPROOT.'/views/admin/inc/footer.php'; ?>
