@@ -11,7 +11,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>BookMyGround</h2>
+                <h2>BookMyGround.lk</h2>
                 <span class="admin-badge">Admin Panel</span>
             </div>
             
