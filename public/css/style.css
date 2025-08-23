@@ -1,3 +1,375 @@
-h1 {
-    color: blue;
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background: #1a1a1a;
+}
+
+/* Header Styles */
+.main-header {
+    background: #1a1a1a;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    padding: 0;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    margin: 0;
+}
+
+.nav-link {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #04ff00;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #04ff00;
+    transition: width 0.3s ease;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-register {
+    color: #ccc;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #333;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+    color: #04ff00;
+    border-color: #04ff00;
+}
+
+.btn-login {
+    background: #04ff00;
+    color: #000;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background: #03cc00;
+    transform: translateY(-2px);
+}
+
+/* Mobile Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Footer Styles */
+.main-footer {
+    background: #111;
+    color: #ccc;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid #333;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-logo {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+    margin-bottom: 15px !important;
+}
+
+.footer-tagline {
+    color: #888;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    max-width: 250px;
+}
+
+.footer-basketball-icon {
+    opacity: 0.3;
+}
+
+.basketball-svg {
+    fill: none;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #04ff00;
+    padding-left: 5px;
+}
+
+.highlight-link {
+    color: #04ff00 !important;
+    font-weight: 600;
+}
+
+.company-info {
+    grid-column: span 1;
+}
+
+.contact-info {
+    margin-bottom: 25px;
+}
+
+.contact-item {
+    color: #888;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.social-media {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: rgba(4, 255, 0, 0.1);
+    color: #04ff00;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    padding: 25px 0;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    color: #888;
+    font-size: 14px;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-legal a {
+    color: #888;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+    color: #04ff00;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: #1a1a1a;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 20px 0;
+        border-top: 1px solid #333;
+        gap: 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        padding: 15px 0;
+    }
+    
+    .nav-actions {
+        display: none;
+    }
+
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 40px 0 30px;
+    }
+    
+    .company-info {
+        grid-column: span 2;
+        text-align: center;
+    }
+    
+    .footer-bottom-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .footer-legal {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .footer-container {
+        padding: 0 15px;
+    }
+    
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 30px 0 25px;
+    }
+    
+    .company-info {
+        grid-column: span 1;
+    }
+    
+    .footer-section h4 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .social-media {
+        justify-content: center;
+    }
 }
