@@ -1,7 +1,8 @@
 <?php
-class Core {
+class Core
+{
     //URL Format --> /controller/method/params
-    protected $currentController = 'Pages';
+    protected $currentController = 'Home';
     protected $currentMethod = 'index';
     protected $params = [];
 
@@ -10,6 +11,16 @@ class Core {
         //print_r($this->getURL());
 
         $url = $this->getURL();
+
+        if (empty($url) || (isset($url[0]) && empty($url[0]))) {
+            // Load default controller (Home)
+            require_once '../app/controllers/' . $this->currentController . '.php';
+            $this->currentController = new $this->currentController;
+            
+            // Call default method with no parameters
+            call_user_func_array([$this->currentController, $this->currentMethod], []);
+            return;
+        }
 
         if (file_exists('../app/controllers/' . ucwords($url[0]) . '.php')) {
             //if the controller exists, then load it
