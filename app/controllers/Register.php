@@ -25,7 +25,11 @@ class Register extends Controller {
             'role_title' => 'Sports Player',
             'role_description' => 'Book venues, join sessions, and connect with coaches',
             'error' => '',
-            'success' => ''
+            'success' => '',
+            'cities' => $this->registerModel->getCities(),
+            'sports' => $this->registerModel->getSportsSpecializations(),
+            'age_groups' => $this->registerModel->getAgeGroups(),
+            'skill_levels' => $this->registerModel->getSkillLevels()
         ];
 
         // Handle form submission
@@ -33,7 +37,7 @@ class Register extends Controller {
             $data = $this->processRegistration($data, 'customer');
         }
 
-        $this->view('signup/v_customer_signup', $data);
+        $this->view('signup/v_signupcustomer', $data);
     }
 
     public function stadium_owner() {
@@ -44,7 +48,10 @@ class Register extends Controller {
             'role_title' => 'Stadium Owner',
             'role_description' => 'List your facilities and manage bookings efficiently',
             'error' => '',
-            'success' => ''
+            'success' => '',
+            'cities' => $this->registerModel->getCities(),
+            'venue_types' => $this->registerModel->getVenueTypes(),
+            'business_types' => $this->registerModel->getBusinessTypes()
         ];
 
         // Handle form submission
@@ -52,7 +59,7 @@ class Register extends Controller {
             $data = $this->processRegistration($data, 'stadium_owner');
         }
 
-        $this->view('signup/v_stadium_owner_signup', $data);
+        $this->view('signup/v_signupowner', $data);
     }
 
     public function coach() {
@@ -63,7 +70,13 @@ class Register extends Controller {
             'role_title' => 'Sports Coach',
             'role_description' => 'Share your expertise and grow your client base',
             'error' => '',
-            'success' => ''
+            'success' => '',
+            'cities' => $this->registerModel->getCities(),
+            'sports' => $this->registerModel->getSportsSpecializations(),
+            'experience_levels' => $this->registerModel->getExperienceLevels(),
+            'certification_levels' => $this->registerModel->getCertificationLevels(),
+            'coaching_types' => $this->registerModel->getCoachingTypes(),
+            'availability_options' => $this->registerModel->getAvailabilityOptions()
         ];
 
         // Handle form submission
@@ -71,7 +84,7 @@ class Register extends Controller {
             $data = $this->processRegistration($data, 'coach');
         }
 
-        $this->view('signup/v_coach_signup', $data);
+        $this->view('signup/v_signupcoach', $data);
     }
 
     public function rental_owner() {
@@ -82,7 +95,11 @@ class Register extends Controller {
             'role_title' => 'Equipment Rental Service',
             'role_description' => 'Offer sports gear and expand your rental business',
             'error' => '',
-            'success' => ''
+            'success' => '',
+            'cities' => $this->registerModel->getCities(),
+            'business_types' => $this->registerModel->getBusinessTypes(),
+            'equipment_types' => $this->registerModel->getEquipmentTypes(),
+            'delivery_options' => $this->registerModel->getDeliveryOptions()
         ];
 
         // Handle form submission
@@ -90,53 +107,55 @@ class Register extends Controller {
             $data = $this->processRegistration($data, 'rental_owner');
         }
 
-        $this->view('signup/v_rental_owner_signup', $data);
+        $this->view('signup/v_signuprental', $data);
     }
 
     private function processRegistration($data, $role) {
-        // Get form data
+        // Get form data - handling both underscore and hyphen naming conventions
         $formData = [
             'role' => $role,
-            'first_name' => $_POST['first_name'] ?? '',
-            'last_name' => $_POST['last_name'] ?? '',
+            'first_name' => $_POST['first_name'] ?? $_POST['first-name'] ?? '',
+            'last_name' => $_POST['last_name'] ?? $_POST['last-name'] ?? '',
             'email' => $_POST['email'] ?? '',
             'phone' => $_POST['phone'] ?? '',
             'password' => $_POST['password'] ?? '',
-            'confirm_password' => $_POST['confirm_password'] ?? '',
+            'confirm_password' => $_POST['confirm_password'] ?? $_POST['confirm-password'] ?? '',
             'agree_terms' => isset($_POST['agree_terms'])
         ];
 
         // Add role-specific fields
         switch($role) {
             case 'customer':
-                $formData['date_of_birth'] = $_POST['date_of_birth'] ?? '';
-                $formData['gender'] = $_POST['gender'] ?? '';
-                $formData['address'] = $_POST['address'] ?? '';
-                $formData['city'] = $_POST['city'] ?? '';
+                $formData['district'] = $_POST['district'] ?? '';
+                $formData['sports'] = $_POST['sports'] ?? '';
+                $formData['age_group'] = $_POST['age_group'] ?? $_POST['age-group'] ?? '';
+                $formData['skill_level'] = $_POST['skill_level'] ?? $_POST['skill-level'] ?? '';
                 break;
 
             case 'stadium_owner':
-                $formData['business_name'] = $_POST['business_name'] ?? '';
-                $formData['business_type'] = $_POST['business_type'] ?? '';
-                $formData['business_address'] = $_POST['business_address'] ?? '';
-                $formData['city'] = $_POST['city'] ?? '';
-                $formData['business_registration'] = $_POST['business_registration'] ?? '';
+                $formData['owner_name'] = $_POST['owner_name'] ?? $_POST['owner-name'] ?? '';
+                $formData['business_name'] = $_POST['business_name'] ?? $_POST['business-name'] ?? '';
+                $formData['district'] = $_POST['district'] ?? '';
+                $formData['venue_type'] = $_POST['venue_type'] ?? $_POST['venue-type'] ?? '';
+                $formData['business_reg'] = $_POST['business_reg'] ?? $_POST['business-reg'] ?? '';
                 break;
 
             case 'coach':
-                $formData['experience_years'] = $_POST['experience_years'] ?? '';
                 $formData['specialization'] = $_POST['specialization'] ?? '';
-                $formData['certifications'] = $_POST['certifications'] ?? '';
-                $formData['coaching_location'] = $_POST['coaching_location'] ?? '';
-                $formData['bio'] = $_POST['bio'] ?? '';
+                $formData['experience'] = $_POST['experience'] ?? '';
+                $formData['certification'] = $_POST['certification'] ?? '';
+                $formData['coaching_type'] = $_POST['coaching_type'] ?? $_POST['coaching-type'] ?? '';
+                $formData['district'] = $_POST['district'] ?? '';
+                $formData['availability'] = $_POST['availability'] ?? '';
                 break;
 
             case 'rental_owner':
-                $formData['business_name'] = $_POST['business_name'] ?? '';
-                $formData['business_address'] = $_POST['business_address'] ?? '';
-                $formData['city'] = $_POST['city'] ?? '';
-                $formData['equipment_types'] = $_POST['equipment_types'] ?? [];
-                $formData['delivery_available'] = isset($_POST['delivery_available']);
+                $formData['owner_name'] = $_POST['owner_name'] ?? $_POST['owner-name'] ?? '';
+                $formData['business_name'] = $_POST['business_name'] ?? $_POST['business-name'] ?? '';
+                $formData['district'] = $_POST['district'] ?? '';
+                $formData['business_type'] = $_POST['business_type'] ?? $_POST['business-type'] ?? '';
+                $formData['equipment_categories'] = $_POST['equipment_categories'] ?? $_POST['equipment-categories'] ?? '';
+                $formData['delivery_service'] = $_POST['delivery_service'] ?? $_POST['delivery-service'] ?? '';
                 break;
         }
 
@@ -189,45 +208,80 @@ class Register extends Controller {
             $errors[] = 'Passwords do not match';
         }
 
-        if (!$data['agree_terms']) {
-            $errors[] = 'You must agree to the terms and conditions';
-        }
-
         // Role-specific validations
         switch($role) {
             case 'customer':
-                if (empty($data['date_of_birth'])) {
-                    $errors[] = 'Date of birth is required';
+                if (empty($data['district'])) {
+                    $errors[] = 'District is required';
                 }
-                if (empty($data['gender'])) {
-                    $errors[] = 'Gender is required';
+                if (empty($data['sports'])) {
+                    $errors[] = 'Preferred sport is required';
+                }
+                if (empty($data['age_group'])) {
+                    $errors[] = 'Age group is required';
+                }
+                if (empty($data['skill_level'])) {
+                    $errors[] = 'Skill level is required';
                 }
                 break;
 
             case 'stadium_owner':
+                if (empty($data['owner_name'])) {
+                    $errors[] = 'Owner name is required';
+                }
                 if (empty($data['business_name'])) {
                     $errors[] = 'Business name is required';
                 }
-                if (empty($data['business_type'])) {
-                    $errors[] = 'Business type is required';
+                if (empty($data['district'])) {
+                    $errors[] = 'District is required';
+                }
+                if (empty($data['venue_type'])) {
+                    $errors[] = 'Venue type is required';
+                }
+                if (empty($data['business_reg'])) {
+                    $errors[] = 'Business registration number is required';
                 }
                 break;
 
             case 'coach':
-                if (empty($data['experience_years'])) {
+                if (empty($data['specialization'])) {
+                    $errors[] = 'Sports specialization is required';
+                }
+                if (empty($data['experience'])) {
                     $errors[] = 'Years of experience is required';
                 }
-                if (empty($data['specialization'])) {
-                    $errors[] = 'Specialization is required';
+                if (empty($data['certification'])) {
+                    $errors[] = 'Certification level is required';
+                }
+                if (empty($data['coaching_type'])) {
+                    $errors[] = 'Coaching type is required';
+                }
+                if (empty($data['district'])) {
+                    $errors[] = 'District is required';
+                }
+                if (empty($data['availability'])) {
+                    $errors[] = 'Availability is required';
                 }
                 break;
 
             case 'rental_owner':
+                if (empty($data['owner_name'])) {
+                    $errors[] = 'Owner name is required';
+                }
                 if (empty($data['business_name'])) {
                     $errors[] = 'Business name is required';
                 }
-                if (empty($data['equipment_types']) || count($data['equipment_types']) == 0) {
-                    $errors[] = 'At least one equipment type is required';
+                if (empty($data['district'])) {
+                    $errors[] = 'District is required';
+                }
+                if (empty($data['business_type'])) {
+                    $errors[] = 'Business type is required';
+                }
+                if (empty($data['equipment_categories'])) {
+                    $errors[] = 'Equipment category is required';
+                }
+                if (empty($data['delivery_service'])) {
+                    $errors[] = 'Delivery service option is required';
                 }
                 break;
         }

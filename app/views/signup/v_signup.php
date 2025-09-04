@@ -1,6 +1,5 @@
 <?php require APPROOT.'/views/inc/components/header.php'; ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +23,8 @@
       </span>
     </p>
     <div class="hero-buttons">
-      <a href="login.html" class="hero-btn">Sign In</a>
-      <a href="signup-options.html" class="hero-btn primary">Sign Up</a>
+      <a href="<?php echo URLROOT; ?>/login" class="hero-btn">Sign In</a>
+      <a href="<?php echo URLROOT; ?>/register" class="hero-btn primary">Sign Up</a>
     </div>
   </div>
   <div class="hero-image">
@@ -61,7 +60,6 @@
       </div>
     </div>
   </div>
-    </div>
 
     <!-- Right side - Signup Form -->
     <div class="signup">
@@ -69,7 +67,7 @@
         <h2 class="signup-heading">CHOOSE YOUR <span class="green">ROLE</span></h2>
         
         <div class="role-cards">
-          <a href="signup-user.html" class="role-card">
+          <a href="<?php echo URLROOT; ?>/register/customer" class="role-card">
             <div class="role-icon">
               <span class="icon">👤</span>
               <div class="icon-ring"></div>
@@ -81,7 +79,7 @@
             </div>
           </a>
           
-          <a href="signup-owner.html" class="role-card">
+          <a href="<?php echo URLROOT; ?>/register/stadium_owner" class="role-card">
             <div class="role-icon">
               <span class="icon">🏟️</span>
               <div class="icon-ring"></div>
@@ -93,7 +91,7 @@
             </div>
           </a>
           
-          <a href="signup-rental.html" class="role-card">
+          <a href="<?php echo URLROOT; ?>/register/rental_owner" class="role-card">
             <div class="role-icon">
               <span class="icon">⚽</span>
               <div class="icon-ring"></div>
@@ -105,7 +103,7 @@
             </div>
           </a>
           
-          <a href="signup-coach.html" class="role-card">
+          <a href="<?php echo URLROOT; ?>/register/coach" class="role-card">
             <div class="role-icon">
               <span class="icon">👨‍🏫</span>
               <div class="icon-ring"></div>
@@ -116,6 +114,14 @@
               <span class="arrow">→</span>
             </div>
           </a>
+        </div>
+        
+        <!-- Already have an account section -->
+        <div class="signup-prompt">
+          <p class="new-user-text">Already have an account?</p>
+          <div class="create-account-wrapper">
+            <a href="<?php echo URLROOT; ?>/login" class="create-account-button">Sign In Here</a>
+          </div>
         </div>
       </form>
     </div>
