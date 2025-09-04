@@ -1,3 +1,5 @@
+/*Krishna Css*/
+
 /*Header & Footer Styling*/
 
 * {
@@ -5139,3 +5141,444 @@ body {
 }
 
 
+/* Newsletter Subscription Section Styles */
+.newsletter-subscription-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 100px 0;
+    position: relative;
+}
+
+.subscription-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.subscription-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* Left Column - Content */
+.subscription-text h2 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.subscription-text p {
+    color: #666;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.subscription-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+    background: rgba(4, 255, 0, 0.1);
+    border-color: rgba(4, 255, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.benefit-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.benefit-item span {
+    color: #2d2d2d;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Right Column - Form */
+.subscription-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subscription-form-wrapper {
+    background: #fff;
+    padding: 40px 35px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid #e9ecef;
+    position: relative;
+}
+
+.subscription-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #03B200, #00cc00, #03B200);
+    border-radius: 22px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.subscription-form-wrapper:hover::before {
+    opacity: 1;
+}
+
+.subscription-form-wrapper h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.form-subtitle {
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Form Styles */
+.subscription-form {
+    margin-bottom: 25px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: #03B200;
+    box-shadow: 0 0 0 3px rgba(4, 255, 0, 0.1);
+}
+
+.email-input {
+    flex: 1;
+    padding: 18px 20px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #2d2d2d;
+    outline: none;
+}
+
+.email-input::placeholder {
+    color: #999;
+}
+
+.send-btn {
+    background: #03B200;
+    color: #000;
+    border: none;
+    padding: 18px 24px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+    background: #00cc00;
+    transform: translateX(2px);
+}
+
+.send-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.send-btn:hover .btn-icon {
+    transform: translateX(3px);
+}
+
+/* Privacy Checkbox */
+.form-privacy {
+    margin-bottom: 20px;
+}
+
+.privacy-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.privacy-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.privacy-checkbox .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.privacy-checkbox input[type="checkbox"]:checked + .checkmark {
+    background: #03B200;
+    border-color: #03B200;
+}
+
+.privacy-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.privacy-text {
+    color: #666;
+}
+
+/* Success Message */
+.success-message {
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    color: #28a745;
+    font-weight: 500;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.success-icon {
+    font-size: 24px;
+}
+
+/* Subscription Stats */
+.subscription-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-top: 25px;
+    border-top: 1px solid #e9ecef;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: #03B200;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .subscription-content {
+        gap: 60px;
+    }
+    
+    .subscription-text h2 {
+        font-size: 40px;
+    }
+    
+    .subscription-text p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 968px) {
+    .newsletter-subscription-section {
+        padding: 80px 0;
+    }
+    
+    .subscription-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .subscription-text h2 {
+        font-size: 32px;
+    }
+    
+    .subscription-benefits {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .subscription-form-wrapper {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .newsletter-subscription-section {
+        padding: 60px 0;
+    }
+    
+    .subscription-text h2 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+    
+    .subscription-text p {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .subscription-benefits {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .benefit-item {
+        padding: 12px;
+    }
+    
+    .benefit-icon {
+        font-size: 20px;
+    }
+    
+    .benefit-item span {
+        font-size: 13px;
+    }
+    
+    .subscription-form-wrapper {
+        padding: 30px 25px;
+    }
+    
+    .subscription-form-wrapper h3 {
+        font-size: 24px;
+    }
+    
+    .form-subtitle {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+    
+    .email-input {
+        padding: 16px 18px;
+        font-size: 15px;
+    }
+    
+    .send-btn {
+        padding: 16px 20px;
+        font-size: 13px;
+    }
+    
+    .subscription-stats {
+        gap: 15px;
+    }
+    
+    .stat-number {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subscription-container {
+        padding: 0 15px;
+    }
+    
+    .subscription-text h2 {
+        font-size: 24px;
+    }
+    
+    .subscription-text p {
+        font-size: 14px;
+    }
+    
+    .subscription-form-wrapper {
+        padding: 25px 20px;
+        max-width: 100%;
+    }
+    
+    .subscription-form-wrapper h3 {
+        font-size: 22px;
+    }
+    
+    .input-wrapper {
+        flex-direction: column;
+    }
+    
+    .email-input {
+        padding: 15px 16px;
+        font-size: 14px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .send-btn {
+        padding: 15px 18px;
+        font-size: 12px;
+        border-radius: 0 0 10px 10px;
+    }
+    
+    .subscription-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .success-message {
+        padding: 16px;
+        font-size: 14px;
+    }
+}

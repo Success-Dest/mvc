@@ -1,3 +1,4 @@
+
 <?php require APPROOT.'/views/inc/components/header.php'; ?>
 
 <!-- Hero Section - Placeholder for later -->
@@ -620,6 +621,93 @@
     </div>
 </section>
 
+<!-- Newsletter Subscription Section -->
+<section class="newsletter-subscription-section">
+    <div class="subscription-container">
+        <div class="subscription-content">
+            <!-- Left Column - Content -->
+            <div class="subscription-text">
+                <h2>Stay Updated with BookMyGround</h2>
+                <p>Get the latest updates on new stadiums, exclusive deals, coaching sessions, and sports events delivered straight to your inbox.</p>
+                
+                <div class="subscription-benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🏟️</div>
+                        <span>New stadium listings</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💰</div>
+                        <span>Exclusive booking discounts</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🏃‍♂️</div>
+                        <span>Sports events & tournaments</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">👨‍🏫</div>
+                        <span>Coaching session updates</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Subscription Form -->
+            <div class="subscription-form-container">
+                <div class="subscription-form-wrapper">
+                    <h3>Subscribe Now</h3>
+                    <p class="form-subtitle">Join 10,000+ sports enthusiasts</p>
+                    
+                    <form class="subscription-form" id="subscriptionForm">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       placeholder="Your email address" 
+                                       class="email-input"
+                                       required>
+                                <button type="submit" class="send-btn" id="subscribeBtn">
+                                    <span class="btn-text">SEND</span>
+                                    <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-privacy">
+                            <label class="privacy-checkbox">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <span class="checkmark"></span>
+                                <span class="privacy-text">I agree to receive newsletters and promotional emails</span>
+                            </label>
+                        </div>
+                        
+                        <div class="success-message" id="successMessage" style="display: none;">
+                            <div class="success-icon">✅</div>
+                            <span>Successfully subscribed! Welcome to BookMyGround community.</span>
+                        </div>
+                    </form>
+                    
+                    <div class="subscription-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Subscribers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Satisfaction</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">Weekly</span>
+                            <span class="stat-label">Updates</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <script>
 // Reuse the same functions from stadiums page
 function showStadiumInfo(id) {
@@ -636,8 +724,45 @@ function bookStadium(id) {
     }
 }
 
-// Intersection Observer for animations
+// Newsletter subscription functionality
 document.addEventListener('DOMContentLoaded', function() {
+    const subscriptionForm = document.getElementById('subscriptionForm');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const successMessage = document.getElementById('successMessage');
+    
+    if (subscriptionForm) {
+        subscriptionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const privacy = document.getElementById('privacy').checked;
+            
+            if (!email || !privacy) {
+                alert('Please fill in your email and accept the privacy policy');
+                return;
+            }
+            
+            // Simulate subscription process
+            subscribeBtn.innerHTML = '<span class="btn-text">SENDING...</span>';
+            subscribeBtn.disabled = true;
+            
+            setTimeout(() => {
+                successMessage.style.display = 'flex';
+                subscriptionForm.style.display = 'none';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    subscriptionForm.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    subscriptionForm.reset();
+                    subscribeBtn.innerHTML = '<span class="btn-text">SEND</span><svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>';
+                    subscribeBtn.disabled = false;
+                }, 3000);
+            }, 2000);
+        });
+    }
+    
+    // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -659,6 +784,15 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
         observer.observe(card);
     });
+    
+    // Animate subscription section
+    const subscriptionSection = document.querySelector('.newsletter-subscription-section');
+    if (subscriptionSection) {
+        subscriptionSection.style.opacity = '0';
+        subscriptionSection.style.transform = 'translateY(30px)';
+        subscriptionSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(subscriptionSection);
+    }
 });
 </script>
 
