@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="hero-image">
-      <img src="basketball player.png" id="basketball" alt="Basketball Player">
+      <img src="<?php echo URLROOT; ?>/images/login/basketball_player.png" id="basketball" alt="Basketball Player">
     </div>
   </section>
 
