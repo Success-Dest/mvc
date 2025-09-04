@@ -1,3 +1,6 @@
+<?php require APPROOT.'/views/inc/components/header.php'; ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +29,7 @@
     </div>
   </div>
   <div class="hero-image">
-    <img src="basketball player.png" alt="Basketball Player" id="basketball">
+    <img src="<?php echo URLROOT; ?>/images/login/basketball_player.png" alt="Basketball Player" id="basketball">
   </div>
 </section>
 
@@ -121,3 +124,4 @@
 
 </body>
 </html>
+<?php require APPROOT.'/views/inc/components/footer.php'; ?>
