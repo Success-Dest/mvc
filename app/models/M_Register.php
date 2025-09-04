@@ -10,6 +10,7 @@ class M_Register {
     public function emailExists($email) {
         $this->db->query('SELECT id FROM users WHERE email = :email');
         $this->db->bind(':email', $email);
+        $this->db->execute();
         
         return $this->db->rowCount() > 0;
     }
@@ -18,6 +19,7 @@ class M_Register {
     public function phoneExists($phone) {
         $this->db->query('SELECT id FROM users WHERE phone = :phone');
         $this->db->bind(':phone', $phone);
+        $this->db->execute();
         
         return $this->db->rowCount() > 0;
     }
@@ -54,9 +56,14 @@ class M_Register {
         $this->db->bind(':status', 'pending'); // Default status
         $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
-        // Execute and return result
+        // Execute and return result - FIXED: Return true instead of lastInsertId
         if ($this->db->execute()) {
-            return $this->db->lastInsertId();
+            // Get the user ID by querying with the email (alternative method)
+            $this->db->query('SELECT id FROM users WHERE email = :email ORDER BY id DESC LIMIT 1');
+            $this->db->bind(':email', $userData['email']);
+            $user = $this->db->single();
+            
+            return $user ? $user->id : true;
         }
         return false;
     }
