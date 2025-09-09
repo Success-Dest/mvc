@@ -136,19 +136,7 @@
             </div>
             <?php endforeach; ?>
         </div>
-
-        <!-- Call-to-Action -->
-        <div class="featured-cta">
-            <div class="cta-content">
-                <h3>Looking for More Options?</h3>
-                <p>Explore our complete collection of stadiums across Sri Lanka</p>
-                <a href="<?php echo URLROOT; ?>/stadiums" class="cta-button">
-                    Browse All Stadiums
-                    <span class="cta-count">(150+ venues available)</span>
-                </a>
-            </div>
-        </div>
-    </div>
+        
 </section>
 
 <!-- Services We Are Offering Section -->
