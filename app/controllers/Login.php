@@ -10,9 +10,15 @@ class Login extends Controller {
     public function index() {
         // Check if already logged in
         session_start();
-        if (isset($_SESSION['user_logged_in'])) {
+        if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
             $this->redirectToDashboard($_SESSION['user_role']);
             return;
+        }
+
+        // Check if admin is logged in
+        if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+            header('Location: ' . URLROOT . '/admin');
+            exit;
         }
 
         // Data to pass to the login view
@@ -55,45 +61,76 @@ class Login extends Controller {
             return $data;
         }
 
-        // Attempt to authenticate user
+        // Attempt to authenticate user (this now checks both users and admins)
         $user = $this->loginModel->login($email, $password);
         
         if ($user) {
-            // Check if user account is active
-            if ($user->status !== 'active') {
-                $statusMsg = $user->status === 'pending' ? 'pending approval' : $user->status;
-                $data['error'] = "Your account is currently {$statusMsg}. Please contact support if you need assistance.";
-                return $data;
+            // Check if it's an admin
+            if ($user->role === 'admin') {
+                // Admin login process
+                if ($user->status !== 'active') {
+                    $data['error'] = 'Your admin account is inactive. Please contact system administrator.';
+                    return $data;
+                }
+
+                // Clear any previous login attempts
+                $this->loginModel->clearLoginAttempts($email);
+                
+                // Update last login for admin
+                $this->loginModel->updateLastLogin($user->id, true);
+                
+                // Start session and set admin session variables
+                session_start();
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_id'] = $user->id;
+                $_SESSION['admin_email'] = $user->email;
+                $_SESSION['admin_name'] = $user->full_name;
+                $_SESSION['admin_role'] = 'admin';
+
+                // Log the activity
+                $this->loginModel->logActivity($user->id, 'Admin logged in', true);
+
+                // Redirect to admin dashboard
+                header('Location: ' . URLROOT . '/admin');
+                exit;
+
+            } else {
+                // Regular user login process
+                if ($user->status !== 'active') {
+                    $statusMsg = $user->status === 'pending' ? 'pending approval' : $user->status;
+                    $data['error'] = "Your account is currently {$statusMsg}. Please contact support if you need assistance.";
+                    return $data;
+                }
+
+                // Clear any previous login attempts
+                $this->loginModel->clearLoginAttempts($email);
+                
+                // Update last login
+                $this->loginModel->updateLastLogin($user->id);
+                
+                // Start session and set session variables
+                session_start();
+                $_SESSION['user_logged_in'] = true;
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['user_email'] = $user->email;
+                $_SESSION['user_name'] = $user->first_name . ' ' . $user->last_name;
+                $_SESSION['user_role'] = $user->role;
+                $_SESSION['user_first_name'] = $user->first_name;
+                $_SESSION['user_last_name'] = $user->last_name;
+                $_SESSION['user_status'] = $user->status;
+
+                // Set remember me cookie if requested
+                if ($remember) {
+                    $token = bin2hex(random_bytes(32));
+                    setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/'); // 30 days
+                }
+
+                // Log the activity
+                $this->loginModel->logActivity($user->id, 'User logged in');
+
+                // Redirect to appropriate dashboard
+                $this->redirectToDashboard($user->role);
             }
-
-            // Clear any previous login attempts
-            $this->loginModel->clearLoginAttempts($email);
-            
-            // Update last login
-            $this->loginModel->updateLastLogin($user->id);
-            
-            // Start session and set session variables
-            session_start();
-            $_SESSION['user_logged_in'] = true;
-            $_SESSION['user_id'] = $user->id;
-            $_SESSION['user_email'] = $user->email;
-            $_SESSION['user_name'] = $user->first_name . ' ' . $user->last_name;
-            $_SESSION['user_role'] = $user->role;
-            $_SESSION['user_first_name'] = $user->first_name;
-            $_SESSION['user_last_name'] = $user->last_name;
-
-            // Set remember me cookie if requested
-            if ($remember) {
-                $token = bin2hex(random_bytes(32));
-                setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/'); // 30 days
-                // In a real app, you'd save this token to the database
-            }
-
-            // Log the activity
-            $this->loginModel->logActivity($user->id, 'User logged in');
-
-            // Redirect to appropriate dashboard
-            $this->redirectToDashboard($user->role);
             
         } else {
             // Record failed login attempt
@@ -120,6 +157,9 @@ class Login extends Controller {
             case 'rental_owner':
                 header('Location: ' . URLROOT . '/rental_owner');
                 break;
+            case 'admin':
+                header('Location: ' . URLROOT . '/admin');
+                break;
             default:
                 header('Location: ' . URLROOT . '/customer');
                 break;
@@ -128,7 +168,7 @@ class Login extends Controller {
     }
 
     public function forgot() {
-        // Handle forgot password
+        // Handle forgot password for both users and admins
         $data = [
             'title' => 'Forgot Password - BookMyGround',
             'error' => '',
@@ -146,7 +186,6 @@ class Login extends Controller {
                 // Generate password reset token
                 $token = $this->loginModel->createPasswordResetToken($email);
                 if ($token) {
-                    // In a real app, you'd send this token via email
                     $data['success'] = 'Password reset instructions have been sent to your email address.';
                 } else {
                     $data['error'] = 'Unable to process password reset. Please try again.';
@@ -162,9 +201,11 @@ class Login extends Controller {
     public function logout() {
         session_start();
         
-        // Log the activity if user is logged in
+        // Log the activity
         if (isset($_SESSION['user_id'])) {
             $this->loginModel->logActivity($_SESSION['user_id'], 'User logged out');
+        } elseif (isset($_SESSION['admin_id'])) {
+            $this->loginModel->logActivity($_SESSION['admin_id'], 'Admin logged out', true);
         }
         
         // Clear session

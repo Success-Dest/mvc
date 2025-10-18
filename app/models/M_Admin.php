@@ -6,10 +6,10 @@ class M_Admin {
         $this->db = new Database();
     }
 
-    // Authenticate admin login
-    public function authenticateAdmin($username, $password) {
-        $this->db->query('SELECT * FROM admins WHERE username = :username');
-        $this->db->bind(':username', $username);
+    // Authenticate admin login (now using email instead of username)
+    public function authenticateAdmin($email, $password) {
+        $this->db->query('SELECT * FROM admins WHERE email = :email');
+        $this->db->bind(':email', $email);
         
         $admin = $this->db->single();
         
@@ -85,5 +85,43 @@ class M_Admin {
         $stats['active_stadiums'] = $this->db->single()->total;
         
         return $stats;
+    }
+
+    // Get admin by email
+    public function getAdminByEmail($email) {
+        $this->db->query('SELECT * FROM admins WHERE email = :email');
+        $this->db->bind(':email', $email);
+        
+        return $this->db->single();
+    }
+
+    // Update admin profile
+    public function updateAdminProfile($admin_id, $data) {
+        $this->db->query('UPDATE admins SET 
+            full_name = :full_name,
+            email = :email,
+            updated_at = NOW()
+            WHERE id = :id');
+        
+        $this->db->bind(':full_name', $data['full_name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':id', $admin_id);
+        
+        return $this->db->execute();
+    }
+
+    // Change admin password
+    public function changeAdminPassword($admin_id, $new_password) {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        
+        $this->db->query('UPDATE admins SET 
+            password = :password,
+            updated_at = NOW()
+            WHERE id = :id');
+        
+        $this->db->bind(':password', $hashed_password);
+        $this->db->bind(':id', $admin_id);
+        
+        return $this->db->execute();
     }
 }

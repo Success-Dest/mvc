@@ -11,9 +11,10 @@ class Admin extends Controller {
         session_start();
         
         // Check if admin is logged in
-        if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            // Redirect to main login page
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         // Dashboard data
@@ -39,61 +40,26 @@ class Admin extends Controller {
         $this->view('admin/v_dashboard', $data);
     }
 
+    // Remove the separate login method - admins now use main login
     public function login() {
-        // Check if already logged in
-        session_start();
-        if (isset($_SESSION['admin_logged_in'])) {
-            header('Location: ' . URLROOT . '/admin');
-            exit;
-        }
-
-        $data = [
-            'title' => 'Admin Login',
-            'error' => ''
-        ];
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = trim($_POST['username'] ?? '');
-            $password = $_POST['password'] ?? '';
-
-            // Basic validation
-            if (empty($username) || empty($password)) {
-                $data['error'] = 'Please fill in all fields';
-            } else {
-                // Authenticate admin
-                $admin = $this->adminModel->authenticateAdmin($username, $password);
-                
-                if ($admin) {
-                    // Check if admin account is active
-                    if ($admin->status !== 'active') {
-                        $data['error'] = 'Your admin account is inactive. Please contact system administrator.';
-                    } else {
-                        // Update last login
-                        $this->adminModel->updateLastLogin($admin->id);
-                        
-                        // Set session variables
-                        $_SESSION['admin_logged_in'] = true;
-                        $_SESSION['admin_id'] = $admin->id;
-                        $_SESSION['admin_username'] = $admin->username;
-                        $_SESSION['admin_name'] = $admin->full_name;
-                        $_SESSION['admin_email'] = $admin->email;
-                        
-                        header('Location: ' . URLROOT . '/admin');
-                        exit;
-                    }
-                } else {
-                    $data['error'] = 'Invalid username or password';
-                }
-            }
-        }
-
-        $this->view('admin/v_login', $data);
+        // Redirect to main login page
+        header('Location: ' . URLROOT . '/login');
+        exit;
     }
 
     public function logout() {
         session_start();
+        
+        // Clear admin session
+        unset($_SESSION['admin_logged_in']);
+        unset($_SESSION['admin_id']);
+        unset($_SESSION['admin_email']);
+        unset($_SESSION['admin_name']);
+        unset($_SESSION['admin_role']);
+        
         session_destroy();
-        header('Location: ' . URLROOT . '/admin/login');
+        
+        header('Location: ' . URLROOT . '/login');
         exit;
     }
 
@@ -101,8 +67,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -123,8 +89,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -145,8 +111,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -163,8 +129,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -184,8 +150,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -208,8 +174,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -229,8 +195,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -253,8 +219,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -273,8 +239,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -293,8 +259,8 @@ class Admin extends Controller {
         session_start();
         
         if (!isset($_SESSION['admin_logged_in'])) {
-            $this->login();
-            return;
+            header('Location: ' . URLROOT . '/login');
+            exit;
         }
 
         $data = [
@@ -313,5 +279,3 @@ class Admin extends Controller {
         $this->view('admin/v_contact', $data);
     }
 }
-
-?>
