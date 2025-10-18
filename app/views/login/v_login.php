@@ -61,14 +61,7 @@
         <form class="login-form" method="POST" action="<?php echo URLROOT; ?>/login">
           <h2 class="login-heading">Welcome Back!</h2>
           
-          <!-- Demo Credentials Notice -->
-          <div style="background: rgba(3, 178, 0, 0.1); border: 1px solid #03B200; color: #03B200; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
-            <strong>Demo Login Credentials:</strong><br>
-            <div style="margin-top: 10px;">
-              <strong>Admin:</strong> admin@bookmyground.lk / password<br>
-              <strong>Customer:</strong> customer@test.com / customer123
-            </div>
-          </div>
+          
           
           <div class="form-group">
             <label for="email" class="login-label">Email</label>
