@@ -11,25 +11,6 @@
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <section class="login-hero">
-    <div class="hero-text">
-      <p class="sign-in-dis">
-        <span class="green">WELCOME BACK</span> TO THE GAME<br>
-        <span class="description">
-          Log in to access your bookings, rentals, coaching sessions,
-          and more — your sports journey <span class="green">continues here!</span>
-        </span>
-      </p>
-      <div class="hero-buttons">
-        <a href="<?php echo URLROOT; ?>/login" class="hero-btn primary">Sign In</a>
-        <a href="<?php echo URLROOT; ?>/register" class="hero-btn">Sign Up</a>
-      </div>
-    </div>
-    <div class="hero-image">
-      <img src="<?php echo URLROOT; ?>/images/login/basketball_player.png" id="basketball" alt="Basketball Player">
-    </div>
-  </section>
 
   <!-- Login Content Section -->
   <section class="login-content-section">
