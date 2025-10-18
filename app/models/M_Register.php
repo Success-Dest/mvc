@@ -53,7 +53,7 @@ class M_Register {
         $this->db->bind(':phone', $userData['phone']);
         $this->db->bind(':password', password_hash($userData['password'], PASSWORD_DEFAULT));
         $this->db->bind(':role', $userData['role']);
-        $this->db->bind(':status', 'pending'); // Default status - admin will approve
+        $this->db->bind(':status', 'active'); // Set customer accounts to active immediately
         $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
         // Execute

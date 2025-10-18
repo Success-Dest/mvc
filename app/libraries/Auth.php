@@ -50,8 +50,6 @@ class Auth {
         }
     }
     
-    // Check if account is active
-    public static function isAccountActive() {
-        return isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'active';
-    }
+    // REMOVED: isAccountActive() method - no longer needed
+    // Customers can login immediately after registration
 }

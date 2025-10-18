@@ -17,13 +17,8 @@ class Customer extends Controller {
             exit;
         }
         
-        // Check if account is active
-        if (!Auth::isAccountActive()) {
-            // Logout and redirect with message
-            session_destroy();
-            header('Location: ' . URLROOT . '/login?error=account_pending');
-            exit;
-        }
+        // REMOVED: Account approval check - customers can login immediately
+        // No need to check if account is active since we set them to active on registration
     }
 
     public function index() {

@@ -95,13 +95,9 @@ class Login extends Controller {
                 exit;
 
             } else {
-                // Regular user login process
-                if ($user->status !== 'active') {
-                    $statusMsg = $user->status === 'pending' ? 'pending approval' : $user->status;
-                    $data['error'] = "Your account is currently {$statusMsg}. Please contact support if you need assistance.";
-                    return $data;
-                }
-
+                // Regular user login process - REMOVED STATUS CHECK
+                // Customers can now login regardless of status
+                
                 // Clear any previous login attempts
                 $this->loginModel->clearLoginAttempts($email);
                 
