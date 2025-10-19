@@ -345,3 +345,4 @@ class Register extends Controller {
         $this->view('signup/v_success', $data);
     }
 }
+?>

@@ -95,6 +95,12 @@ class Login extends Controller {
             } else {
                 // Regular user login process
                 
+                // Check if user account is active
+                if ($user->status !== 'active') {
+                    $data['error'] = 'Your account is not active. Please contact support.';
+                    return $data;
+                }
+                
                 // Clear any previous login attempts
                 $this->loginModel->clearLoginAttempts($email);
                 
@@ -138,22 +144,22 @@ class Login extends Controller {
     private function redirectToDashboard($role) {
         switch($role) {
             case 'customer':
-                header('Location: ' . URLROOT . '/Customer');
+                header('Location: ' . URLROOT . '/customer');
                 break;
             case 'stadium_owner':
-                header('Location: ' . URLROOT . '/Stadium_owner');
+                header('Location: ' . URLROOT . '/stadium_owner');
                 break;
             case 'coach':
-                header('Location: ' . URLROOT . '/Coach');
+                header('Location: ' . URLROOT . '/coach');
                 break;
             case 'rental_owner':
-                header('Location: ' . URLROOT . '/Rental_owner');
+                header('Location: ' . URLROOT . '/rental_owner');
                 break;
             case 'admin':
-                header('Location: ' . URLROOT . '/Admin');
+                header('Location: ' . URLROOT . '/admin');
                 break;
             default:
-                header('Location: ' . URLROOT . '/Customer');
+                header('Location: ' . URLROOT . '/customer');
                 break;
         }
         exit;
@@ -191,7 +197,12 @@ class Login extends Controller {
     }
 
     public function logout() {
-        // Log the activity
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Log the activity before clearing session
         if (isset($_SESSION['user_id'])) {
             $this->loginModel->logActivity($_SESSION['user_id'], 'User logged out');
         } elseif (isset($_SESSION['admin_id'])) {
@@ -220,4 +231,65 @@ class Login extends Controller {
         header('Location: ' . URLROOT . '/register');
         exit;
     }
+
+    public function resetPassword($token = null) {
+        // Handle password reset with token
+        if (!$token) {
+            header('Location: ' . URLROOT . '/login/forgot');
+            exit;
+        }
+
+        $data = [
+            'title' => 'Reset Password - BookMyGround',
+            'error' => '',
+            'success' => '',
+            'token' => $token
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $password = $_POST['password'] ?? '';
+            $confirmPassword = $_POST['confirm_password'] ?? '';
+            $resetToken = $_POST['token'] ?? '';
+
+            // Validate inputs
+            if (empty($password) || empty($confirmPassword)) {
+                $data['error'] = 'Please fill in all fields';
+            } elseif (strlen($password) < 6) {
+                $data['error'] = 'Password must be at least 6 characters long';
+            } elseif ($password !== $confirmPassword) {
+                $data['error'] = 'Passwords do not match';
+            } elseif ($this->loginModel->resetPassword($resetToken, $password)) {
+                $data['success'] = 'Password reset successfully. You can now login with your new password.';
+                // Redirect to login after 3 seconds
+                header('refresh:3;url=' . URLROOT . '/login');
+            } else {
+                $data['error'] = 'Invalid or expired reset token. Please request a new password reset.';
+            }
+        } else {
+            // Verify token is valid
+            if (!$this->loginModel->verifyResetToken($token)) {
+                $data['error'] = 'Invalid or expired reset token. Please request a new password reset.';
+            }
+        }
+
+        $this->view('login/v_reset_password', $data);
+    }
+
+    public function verify($token = null) {
+        // Handle email verification
+        if (!$token) {
+            header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        if ($this->loginModel->verifyEmail($token)) {
+            $_SESSION['verification_success'] = 'Email verified successfully! You can now login.';
+        } else {
+            $_SESSION['verification_error'] = 'Invalid or expired verification token.';
+        }
+
+        header('Location: ' . URLROOT . '/login');
+        exit;
+    }
 }
+?>
