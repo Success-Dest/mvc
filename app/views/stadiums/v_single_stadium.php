@@ -1,5 +1,7 @@
 <?php require APPROOT.'/views/inc/components/header.php'; ?>
 
+<link rel="stylesheet" href="<?php echo URLROOT; ?>/css/single-stadium.css">
+
 <!-- Stadium Detail Section -->
 <section class="stadium-detail-section">
     <div class="detail-container">
@@ -16,217 +18,7 @@
         <div class="stadium-header">
             <div class="stadium-title">
                 <h1><?php echo $data['stadium']->name; ?></h1>
-                <div class="stadium-info">
-                    <h3><a href="<?php echo URLROOT; ?>/stadiums/single/<?php echo $stadium->id; ?>"><?php echo $stadium->name; ?></a></h3>
-                    <div class="location">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <span><?php echo $stadium->location; ?></span>
-                    </div>
-                    <div class="price">
-                        <span class="amount">LKR <?php echo number_format($stadium->price); ?></span>
-                        <span class="period">per hour</span>
-                    </div>
-                    <div class="features">
-                        <?php foreach(array_slice($stadium->features, 0, 2) as $feature): ?>
-                            <span class="feature-tag"><?php echo $feature; ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        
-        <div class="view-more-nearby">
-            <a href="<?php echo URLROOT; ?>/stadiums" class="btn-view-more">View All Stadiums</a>
-        </div>
-    </div>
-</section>
-
-<!-- Gallery Modal -->
-<div id="galleryModal" class="modal">
-    <div class="modal-content gallery-modal">
-        <div class="modal-header">
-            <h3><?php echo $data['stadium']->name; ?> - Gallery</h3>
-            <span class="close" onclick="closeGalleryModal()">&times;</span>
-        </div>
-        <div class="gallery-modal-content">
-            <div class="gallery-main-image">
-                <img id="modalMainImage" src="" alt="Gallery Image">
-                <button class="prev-btn" onclick="previousImage()">❮</button>
-                <button class="next-btn" onclick="nextImage()">❯</button>
-            </div>
-            <div class="gallery-thumbnails-modal">
-                <?php foreach($data['gallery_images'] as $index => $image): ?>
-                <div class="thumbnail-modal" onclick="selectModalImage(<?php echo $index; ?>)">
-                    <img src="<?php echo URLROOT; ?>/images/stadiums/<?php echo $image; ?>" alt="Gallery Image <?php echo $index + 1; ?>">
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Video Modal -->
-<div id="videoModal" class="modal">
-    <div class="modal-content video-modal">
-        <div class="modal-header">
-            <h3>Stadium Video</h3>
-            <span class="close" onclick="closeVideoModal()">&times;</span>
-        </div>
-        <div class="video-modal-content">
-            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-
-<script>
-// Gallery functionality
-let currentImageIndex = 0;
-const galleryImages = <?php echo json_encode($data['gallery_images']); ?>;
-
-function changeMainImage(imageSrc) {
-    document.getElementById('mainImage').src = imageSrc;
-    
-    // Update active thumbnail
-    document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
-    event.target.closest('.thumbnail').classList.add('active');
-}
-
-function openGalleryModal() {
-    const modal = document.getElementById('galleryModal');
-    modal.style.display = 'block';
-    
-    if (galleryImages.length > 0) {
-        currentImageIndex = 0;
-        document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
-        updateModalThumbnails();
-    }
-}
-
-function closeGalleryModal() {
-    document.getElementById('galleryModal').style.display = 'none';
-}
-
-function selectModalImage(index) {
-    currentImageIndex = index;
-    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
-    updateModalThumbnails();
-}
-
-function previousImage() {
-    currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : galleryImages.length - 1;
-    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
-    updateModalThumbnails();
-}
-
-function nextImage() {
-    currentImageIndex = currentImageIndex < galleryImages.length - 1 ? currentImageIndex + 1 : 0;
-    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
-    updateModalThumbnails();
-}
-
-function updateModalThumbnails() {
-    document.querySelectorAll('.thumbnail-modal').forEach((thumb, index) => {
-        thumb.classList.toggle('active', index === currentImageIndex);
-    });
-}
-
-// Video functionality
-function playVideo(videoUrl) {
-    const modal = document.getElementById('videoModal');
-    const frame = document.getElementById('videoFrame');
-    frame.src = videoUrl;
-    modal.style.display = 'block';
-}
-
-function closeVideoModal() {
-    const modal = document.getElementById('videoModal');
-    const frame = document.getElementById('videoFrame');
-    frame.src = '';
-    modal.style.display = 'none';
-}
-
-// Booking form functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('bookingForm');
-    const startTime = document.getElementById('start-time');
-    const duration = document.getElementById('duration');
-    const pricePerHour = <?php echo $data['stadium']->price; ?>;
-    
-    function updateBookingSummary() {
-        const hours = parseInt(duration.value) || 0;
-        const subtotal = pricePerHour * hours;
-        const serviceFee = Math.round(subtotal * 0.05); // 5% service fee
-        const total = subtotal + serviceFee;
-        
-        document.getElementById('subtotal').textContent = 'LKR ' + subtotal.toLocaleString();
-        document.getElementById('service-fee').textContent = 'LKR ' + serviceFee.toLocaleString();
-        document.getElementById('total-amount').textContent = 'LKR ' + total.toLocaleString();
-    }
-    
-    duration.addEventListener('change', updateBookingSummary);
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const date = formData.get('date');
-        const startTimeValue = formData.get('start_time');
-        const durationValue = formData.get('duration');
-        
-        if (!date || !startTimeValue || !durationValue) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        // Simulate booking process
-        alert('Booking request submitted! You will be redirected to payment page.');
-        // In real implementation, this would redirect to booking/payment page
-        // window.location.href = '<?php echo URLROOT; ?>/booking/confirm';
-    });
-});
-
-// Contact owner functionality
-document.querySelector('.btn-contact-owner').addEventListener('click', function() {
-    alert('Contact owner functionality will be implemented');
-});
-
-// Load more reviews functionality
-document.querySelector('.btn-load-more-reviews').addEventListener('click', function() {
-    alert('Load more reviews functionality will be implemented');
-});
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const galleryModal = document.getElementById('galleryModal');
-    const videoModal = document.getElementById('videoModal');
-    
-    if (event.target == galleryModal) {
-        closeGalleryModal();
-    }
-    if (event.target == videoModal) {
-        closeVideoModal();
-    }
-}
-
-// Keyboard navigation for gallery
-document.addEventListener('keydown', function(event) {
-    const galleryModal = document.getElementById('galleryModal');
-    if (galleryModal.style.display === 'block') {
-        if (event.key === 'ArrowLeft') {
-            previousImage();
-        } else if (event.key === 'ArrowRight') {
-            nextImage();
-        } else if (event.key === 'Escape') {
-            closeGalleryModal();
-        }
-    }
-});
-</script>
-
-<?php require APPROOT.'/views/inc/components/footer.php'; ?>meta">
+                <div class="stadium-meta">
                     <div class="location">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -593,4 +385,214 @@ document.addEventListener('keydown', function(event) {
                         <span class="rating"><?php echo $stadium->rating; ?></span>
                     </div>
                 </div>
-                <div class="stadium-
+                <div class="stadium-meta">
+                    <h3><a href="<?php echo URLROOT; ?>/stadiums/single/<?php echo $stadium->id; ?>"><?php echo $stadium->name; ?></a></h3>
+                    <div class="location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span><?php echo $stadium->location; ?></span>
+                    </div>
+                    <div class="price">
+                        <span class="amount">LKR <?php echo number_format($stadium->price); ?></span>
+                        <span class="period">per hour</span>
+                    </div>
+                    <div class="features">
+                        <?php foreach(array_slice($stadium->features, 0, 2) as $feature): ?>
+                            <span class="feature-tag"><?php echo $feature; ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="view-more-nearby">
+            <a href="<?php echo URLROOT; ?>/stadiums" class="btn-view-more">View All Stadiums</a>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Modal -->
+<div id="galleryModal" class="modal">
+    <div class="modal-content gallery-modal">
+        <div class="modal-header">
+            <h3><?php echo $data['stadium']->name; ?> - Gallery</h3>
+            <span class="close" onclick="closeGalleryModal()">&times;</span>
+        </div>
+        <div class="gallery-modal-content">
+            <div class="gallery-main-image">
+                <img id="modalMainImage" src="" alt="Gallery Image">
+                <button class="prev-btn" onclick="previousImage()">❮</button>
+                <button class="next-btn" onclick="nextImage()">❯</button>
+            </div>
+            <div class="gallery-thumbnails-modal">
+                <?php foreach($data['gallery_images'] as $index => $image): ?>
+                <div class="thumbnail-modal" onclick="selectModalImage(<?php echo $index; ?>)">
+                    <img src="<?php echo URLROOT; ?>/images/stadiums/<?php echo $image; ?>" alt="Gallery Image <?php echo $index + 1; ?>">
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Modal -->
+<div id="videoModal" class="modal">
+    <div class="modal-content video-modal">
+        <div class="modal-header">
+            <h3>Stadium Video</h3>
+            <span class="close" onclick="closeVideoModal()">&times;</span>
+        </div>
+        <div class="video-modal-content">
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+// Gallery functionality
+let currentImageIndex = 0;
+const galleryImages = <?php echo json_encode($data['gallery_images']); ?>;
+
+function changeMainImage(imageSrc) {
+    document.getElementById('mainImage').src = imageSrc;
+    
+    // Update active thumbnail
+    document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+    event.target.closest('.thumbnail').classList.add('active');
+}
+
+function openGalleryModal() {
+    const modal = document.getElementById('galleryModal');
+    modal.style.display = 'block';
+    
+    if (galleryImages.length > 0) {
+        currentImageIndex = 0;
+        document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
+        updateModalThumbnails();
+    }
+}
+
+function closeGalleryModal() {
+    document.getElementById('galleryModal').style.display = 'none';
+}
+
+function selectModalImage(index) {
+    currentImageIndex = index;
+    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
+    updateModalThumbnails();
+}
+
+function previousImage() {
+    currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : galleryImages.length - 1;
+    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
+    updateModalThumbnails();
+}
+
+function nextImage() {
+    currentImageIndex = currentImageIndex < galleryImages.length - 1 ? currentImageIndex + 1 : 0;
+    document.getElementById('modalMainImage').src = '<?php echo URLROOT; ?>/images/stadiums/' + galleryImages[currentImageIndex];
+    updateModalThumbnails();
+}
+
+function updateModalThumbnails() {
+    document.querySelectorAll('.thumbnail-modal').forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentImageIndex);
+    });
+}
+
+// Video functionality
+function playVideo(videoUrl) {
+    const modal = document.getElementById('videoModal');
+    const frame = document.getElementById('videoFrame');
+    frame.src = videoUrl;
+    modal.style.display = 'block';
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const frame = document.getElementById('videoFrame');
+    frame.src = '';
+    modal.style.display = 'none';
+}
+
+// Booking form functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('bookingForm');
+    const startTime = document.getElementById('start-time');
+    const duration = document.getElementById('duration');
+    const pricePerHour = <?php echo $data['stadium']->price; ?>;
+    
+    function updateBookingSummary() {
+        const hours = parseInt(duration.value) || 0;
+        const subtotal = pricePerHour * hours;
+        const serviceFee = Math.round(subtotal * 0.05); // 5% service fee
+        const total = subtotal + serviceFee;
+        
+        document.getElementById('subtotal').textContent = 'LKR ' + subtotal.toLocaleString();
+        document.getElementById('service-fee').textContent = 'LKR ' + serviceFee.toLocaleString();
+        document.getElementById('total-amount').textContent = 'LKR ' + total.toLocaleString();
+    }
+    
+    duration.addEventListener('change', updateBookingSummary);
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const date = formData.get('date');
+        const startTimeValue = formData.get('start_time');
+        const durationValue = formData.get('duration');
+        
+        if (!date || !startTimeValue || !durationValue) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Simulate booking process
+        alert('Booking request submitted! You will be redirected to payment page.');
+        // In real implementation, this would redirect to booking/payment page
+        // window.location.href = '<?php echo URLROOT; ?>/booking/confirm';
+    });
+});
+
+// Contact owner functionality
+document.querySelector('.btn-contact-owner').addEventListener('click', function() {
+    alert('Contact owner functionality will be implemented');
+});
+
+// Load more reviews functionality
+document.querySelector('.btn-load-more-reviews').addEventListener('click', function() {
+    alert('Load more reviews functionality will be implemented');
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const galleryModal = document.getElementById('galleryModal');
+    const videoModal = document.getElementById('videoModal');
+    
+    if (event.target == galleryModal) {
+        closeGalleryModal();
+    }
+    if (event.target == videoModal) {
+        closeVideoModal();
+    }
+}
+
+// Keyboard navigation for gallery
+document.addEventListener('keydown', function(event) {
+    const galleryModal = document.getElementById('galleryModal');
+    if (galleryModal.style.display === 'block') {
+        if (event.key === 'ArrowLeft') {
+            previousImage();
+        } else if (event.key === 'ArrowRight') {
+            nextImage();
+        } else if (event.key === 'Escape') {
+            closeGalleryModal();
+        }
+    }
+});
+</script>
+
+<?php require APPROOT.'/views/inc/components/footer.php'; ?>
