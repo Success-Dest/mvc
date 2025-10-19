@@ -64,6 +64,7 @@
           </div>
         <?php endif; ?>
 
+        <!-- FIXED: Corrected form action URL -->
         <form class="signup-form" method="POST" action="<?php echo URLROOT; ?>/register/stadium_owner">
           <h2 class="signup-heading">Create Venue Owner Account</h2>
           

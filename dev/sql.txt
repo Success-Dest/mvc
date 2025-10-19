@@ -450,3 +450,20 @@ INSERT INTO customer_profiles (user_id, district, sports, age_group, skill_level
 -- Email: kulakshi@test.com, Password: customer123  
 -- Email: dinesh@test.com, Password: customer123
 -- Email: kalana@test.com, Password: customer123
+
+
+
+Stadium Owner:
+-- Add test stadium owner account
+-- Password: owner123
+
+INSERT INTO users (first_name, last_name, email, phone, password, role, status, created_at) VALUES 
+('Stadium', 'Owner', 'owner@test.com', '+94 71 999 8888', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'stadium_owner', 'active', NOW());
+
+-- Insert stadium owner profile (get the last inserted ID)
+INSERT INTO stadium_owner_profiles (user_id, owner_name, business_name, district, venue_type, business_registration, created_at) VALUES 
+(LAST_INSERT_ID(), 'John Stadium Owner', 'Premium Sports Complex', 'Colombo', 'sports_complex', 'BR123456789', NOW());
+
+-- Test credentials:
+-- Email: owner@test.com
+-- Password:

@@ -17,15 +17,23 @@ class M_Stadium_owner {
                 return $this->getDefaultStats();
             }
 
-            // For now return demo data, later replace with actual database queries
-            return [
-                'total_properties' => 3,
-                'active_bookings' => 8,
-                'monthly_revenue' => 45000,
-                'total_customers' => 24,
-                'occupancy_rate' => 75,
-                'average_rating' => 4.6
-            ];
+            // Get actual stats from database
+            $stats = [];
+            
+            // Total properties count
+            $this->db->query('SELECT COUNT(*) as total FROM stadiums WHERE owner_id = :owner_id');
+            $this->db->bind(':owner_id', $owner_id);
+            $result = $this->db->single();
+            $stats['total_properties'] = $result ? $result->total : 0;
+            
+            // For now, return mixed real and demo data
+            $stats['active_bookings'] = 8;
+            $stats['monthly_revenue'] = 45000;
+            $stats['total_customers'] = 24;
+            $stats['occupancy_rate'] = 75;
+            $stats['average_rating'] = 4.6;
+
+            return $stats;
 
         } catch (Exception $e) {
             error_log('Error in getOwnerStats: ' . $e->getMessage());
@@ -47,7 +55,7 @@ class M_Stadium_owner {
     // Get recent bookings for owner
     public function getRecentBookings($owner_id, $limit = 5) {
         try {
-            // Return sample data for now
+            // For now return sample data, later replace with actual database queries
             return [
                 [
                     'id' => 'BK001',
@@ -157,6 +165,8 @@ class M_Stadium_owner {
     // Get all properties for owner
     public function getAllProperties($owner_id) {
         try {
+            // In a real implementation, fetch from database
+            // For now, return sample data
             return [
                 [
                     'id' => 1,
@@ -218,6 +228,285 @@ class M_Stadium_owner {
         } catch (Exception $e) {
             error_log('Error in getPackageLimits: ' . $e->getMessage());
             return [];
+        }
+    }
+
+    // Get all bookings for owner
+    public function getAllBookings($owner_id) {
+        try {
+            // Return sample booking data
+            return [
+                [
+                    'id' => 'BK001',
+                    'customer' => 'Krishna Wishvajith',
+                    'property' => 'Colombo Cricket Ground',
+                    'date' => '2025-01-25',
+                    'time' => '2:00 PM - 4:00 PM',
+                    'duration' => '2 hours',
+                    'amount' => 5000,
+                    'commission' => 600,
+                    'net_amount' => 4400,
+                    'status' => 'Confirmed'
+                ],
+                [
+                    'id' => 'BK002',
+                    'customer' => 'Kulakshi Thathsarani',
+                    'property' => 'Football Arena Pro',
+                    'date' => '2025-01-26',
+                    'time' => '6:00 PM - 8:00 PM',
+                    'duration' => '2 hours',
+                    'amount' => 7500,
+                    'commission' => 900,
+                    'net_amount' => 6600,
+                    'status' => 'Pending'
+                ]
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getAllBookings: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Get booking stats
+    public function getBookingStats($owner_id) {
+        try {
+            return [
+                'confirmed' => 67,
+                'pending' => 8,
+                'today' => 3,
+                'revenue' => 125000
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getBookingStats: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Get messages for owner
+    public function getMessages($owner_id) {
+        try {
+            return [
+                [
+                    'id' => 1,
+                    'from' => 'Krishna Wishvajith',
+                    'subject' => 'Booking Inquiry',
+                    'message' => 'Hi, I would like to book your cricket ground...',
+                    'date' => '2025-01-19',
+                    'status' => 'unread'
+                ]
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getMessages: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Get unread message count
+    public function getUnreadMessageCount($owner_id) {
+        try {
+            return 3; // Sample count
+        } catch (Exception $e) {
+            error_log('Error in getUnreadMessageCount: ' . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // Send reply to message
+    public function sendReply($owner_id, $messageData) {
+        try {
+            // In real implementation, save reply to database
+            return true;
+        } catch (Exception $e) {
+            error_log('Error in sendReply: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Get revenue data
+    public function getRevenueData($owner_id) {
+        try {
+            return [
+                'total_revenue' => 278000,
+                'this_month' => 45000,
+                'pending_payout' => 12000,
+                'monthly_data' => [
+                    'January' => 45000,
+                    'February' => 38000,
+                    'March' => 42000,
+                    'April' => 50000,
+                    'May' => 55000,
+                    'June' => 48000
+                ]
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getRevenueData: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Get analytics data
+    public function getAnalytics($owner_id) {
+        try {
+            return [
+                'property_performance' => [
+                    ['name' => 'Football Arena Pro', 'bookings' => 32, 'revenue' => 19000],
+                    ['name' => 'Colombo Cricket Ground', 'bookings' => 45, 'revenue' => 18000],
+                    ['name' => 'Tennis Academy Courts', 'bookings' => 28, 'revenue' => 8000]
+                ]
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getAnalytics: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Add new property
+    public function addProperty($owner_id, $propertyData) {
+        try {
+            if (!$this->db) {
+                return false;
+            }
+
+            // In real implementation, insert into database
+            // For now, just return true
+            return true;
+        } catch (Exception $e) {
+            error_log('Error in addProperty: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Update property
+    public function updateProperty($owner_id, $property_id, $propertyData) {
+        try {
+            if (!$this->db) {
+                return false;
+            }
+
+            // In real implementation, update database
+            return true;
+        } catch (Exception $e) {
+            error_log('Error in updateProperty: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Get single property
+    public function getProperty($owner_id, $property_id) {
+        try {
+            // Return sample property data
+            return [
+                'id' => $property_id,
+                'name' => 'Sample Property',
+                'type' => 'Football',
+                'category' => 'Outdoor',
+                'price' => 5000,
+                'location' => 'Colombo 03',
+                'description' => 'Sample description',
+                'features' => ['Lighting', 'Parking'],
+                'status' => 'Active',
+                'total_bookings' => 45,
+                'monthly_revenue' => 18000,
+                'rating' => 4.8,
+                'images' => ['sample1.jpg', 'sample2.jpg']
+            ];
+        } catch (Exception $e) {
+            error_log('Error in getProperty: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Get profile data
+    public function getProfileData($owner_id) {
+        try {
+            if (!$this->db) {
+                return $this->getDefaultProfileData();
+            }
+
+            $this->db->query('SELECT u.*, sop.* FROM users u
+                LEFT JOIN stadium_owner_profiles sop ON u.id = sop.user_id
+                WHERE u.id = :id AND u.role = "stadium_owner"');
+            $this->db->bind(':id', $owner_id);
+            
+            $profile = $this->db->single();
+            
+            if ($profile) {
+                return [
+                    'owner_name' => $profile->owner_name ?? 'Stadium Owner',
+                    'business_name' => $profile->business_name ?? 'Sports Complex',
+                    'email' => $profile->email ?? 'owner@example.com',
+                    'phone' => $profile->phone ?? 'Not set',
+                    'address' => $profile->address ?? 'Not set',
+                    'business_registration' => $profile->business_registration ?? 'Not set',
+                    'website' => $profile->website ?? '',
+                    'package_type' => 'Standard', // This would come from a separate package tracking
+                    'total_properties' => 3,
+                    'total_revenue' => 278000,
+                    'rating' => '4.6',
+                    'member_since' => isset($profile->created_at) ? date('F Y', strtotime($profile->created_at)) : 'January 2024'
+                ];
+            }
+            
+            return $this->getDefaultProfileData();
+            
+        } catch (Exception $e) {
+            error_log('Error in getProfileData: ' . $e->getMessage());
+            return $this->getDefaultProfileData();
+        }
+    }
+
+    private function getDefaultProfileData() {
+        return [
+            'owner_name' => 'Stadium Owner',
+            'business_name' => 'Sports Complex',
+            'email' => 'owner@example.com',
+            'phone' => 'Not set',
+            'address' => 'Not set',
+            'business_registration' => 'Not set',
+            'website' => '',
+            'package_type' => 'Standard',
+            'total_properties' => 0,
+            'total_revenue' => 0,
+            'rating' => '0.0',
+            'member_since' => 'January 2025'
+        ];
+    }
+
+    // Update profile
+    public function updateProfile($owner_id, $profileData) {
+        try {
+            if (!$this->db) {
+                return false;
+            }
+
+            // Update main user data
+            $this->db->query('UPDATE users SET
+                phone = :phone,
+                updated_at = NOW()
+                WHERE id = :id');
+            
+            $this->db->bind(':phone', $profileData['phone']);
+            $this->db->bind(':id', $owner_id);
+            
+            $result1 = $this->db->execute();
+
+            // Update stadium owner profile data
+            $this->db->query('UPDATE stadium_owner_profiles SET
+                owner_name = :owner_name,
+                business_name = :business_name,
+                updated_at = NOW()
+                WHERE user_id = :id');
+            
+            $this->db->bind(':owner_name', $profileData['owner_name']);
+            $this->db->bind(':business_name', $profileData['business_name']);
+            $this->db->bind(':id', $owner_id);
+            
+            $result2 = $this->db->execute();
+            
+            return $result1 && $result2;
+        } catch (Exception $e) {
+            error_log('Error in updateProfile: ' . $e->getMessage());
+            return false;
         }
     }
 }
