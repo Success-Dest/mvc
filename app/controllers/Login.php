@@ -9,7 +9,6 @@ class Login extends Controller {
 
     public function index() {
         // Check if already logged in
-        session_start();
         if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) {
             $this->redirectToDashboard($_SESSION['user_role']);
             return;
@@ -79,8 +78,7 @@ class Login extends Controller {
                 // Update last login for admin
                 $this->loginModel->updateLastLogin($user->id, true);
                 
-                // Start session and set admin session variables
-                session_start();
+                // Set admin session variables
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_id'] = $user->id;
                 $_SESSION['admin_email'] = $user->email;
@@ -95,8 +93,7 @@ class Login extends Controller {
                 exit;
 
             } else {
-                // Regular user login process - REMOVED STATUS CHECK
-                // Customers can now login regardless of status
+                // Regular user login process
                 
                 // Clear any previous login attempts
                 $this->loginModel->clearLoginAttempts($email);
@@ -104,8 +101,7 @@ class Login extends Controller {
                 // Update last login
                 $this->loginModel->updateLastLogin($user->id);
                 
-                // Start session and set session variables
-                session_start();
+                // Set user session variables
                 $_SESSION['user_logged_in'] = true;
                 $_SESSION['user_id'] = $user->id;
                 $_SESSION['user_email'] = $user->email;
@@ -142,22 +138,22 @@ class Login extends Controller {
     private function redirectToDashboard($role) {
         switch($role) {
             case 'customer':
-                header('Location: ' . URLROOT . '/customer');
+                header('Location: ' . URLROOT . '/Customer');
                 break;
             case 'stadium_owner':
-                header('Location: ' . URLROOT . '/stadium_owner');
+                header('Location: ' . URLROOT . '/Stadium_owner');
                 break;
             case 'coach':
-                header('Location: ' . URLROOT . '/coach');
+                header('Location: ' . URLROOT . '/Coach');
                 break;
             case 'rental_owner':
-                header('Location: ' . URLROOT . '/rental_owner');
+                header('Location: ' . URLROOT . '/Rental_owner');
                 break;
             case 'admin':
-                header('Location: ' . URLROOT . '/admin');
+                header('Location: ' . URLROOT . '/Admin');
                 break;
             default:
-                header('Location: ' . URLROOT . '/customer');
+                header('Location: ' . URLROOT . '/Customer');
                 break;
         }
         exit;
@@ -195,8 +191,6 @@ class Login extends Controller {
     }
 
     public function logout() {
-        session_start();
-        
         // Log the activity
         if (isset($_SESSION['user_id'])) {
             $this->loginModel->logActivity($_SESSION['user_id'], 'User logged out');
@@ -205,12 +199,16 @@ class Login extends Controller {
         }
         
         // Clear session
+        session_unset();
         session_destroy();
         
         // Clear remember me cookie
         if (isset($_COOKIE['remember_token'])) {
             setcookie('remember_token', '', time() - 3600, '/');
         }
+        
+        // Start new session
+        session_start();
         
         // Redirect to login page
         header('Location: ' . URLROOT . '/login');
