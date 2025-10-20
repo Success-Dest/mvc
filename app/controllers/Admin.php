@@ -579,4 +579,85 @@ class Admin extends Controller {
 
         $this->view('admin/v_contact', $data);
     }
+
+    public function listings() {
+    session_start();
+    
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header('Location: ' . URLROOT . '/login');
+        exit;
+    }
+
+    $data = [
+        'title' => 'Stadium Listings Management',
+        'active_listings' => [
+            ['id' => 1, 'name' => 'Colombo Cricket Ground', 'owner' => 'Rajesh Kumar', 'type' => 'Cricket', 'category' => 'Outdoor', 'price' => 5000, 'location' => 'Colombo 03', 'status' => 'Active', 'featured' => true, 'created' => '2025-01-15', 'views' => 245, 'bookings' => 12],
+            ['id' => 2, 'name' => 'Football Arena Pro', 'owner' => 'David Fernando', 'type' => 'Football', 'category' => 'Outdoor', 'price' => 7500, 'location' => 'Colombo 05', 'status' => 'Active', 'featured' => true, 'created' => '2025-01-10', 'views' => 189, 'bookings' => 8],
+            ['id' => 3, 'name' => 'Tennis Academy Courts', 'owner' => 'Michelle Perera', 'type' => 'Tennis', 'category' => 'Outdoor', 'price' => 2500, 'location' => 'Colombo 06', 'status' => 'Active', 'featured' => false, 'created' => '2025-01-08', 'views' => 156, 'bookings' => 5],
+        ],
+        'pending_listings' => [
+            ['id' => 4, 'name' => 'New Basketball Court', 'owner' => 'Kevin Rodrigo', 'type' => 'Basketball', 'category' => 'Indoor', 'price' => 4000, 'location' => 'Colombo 04', 'status' => 'Pending', 'submitted' => '2025-01-20', 'reason' => 'New listing awaiting approval'],
+            ['id' => 5, 'name' => 'Swimming Pool Complex', 'owner' => 'Sarah Johnson', 'type' => 'Swimming', 'category' => 'Outdoor', 'price' => 6000, 'location' => 'Mount Lavinia', 'status' => 'Pending', 'submitted' => '2025-01-19', 'reason' => 'Missing documentation'],
+        ],
+        'expired_listings' => [
+            ['id' => 6, 'name' => 'Old Badminton Hall', 'owner' => 'Former Owner', 'type' => 'Badminton', 'category' => 'Indoor', 'price' => 3000, 'location' => 'Colombo 02', 'status' => 'Expired', 'expired' => '2025-01-01', 'last_booking' => '2024-12-15'],
+        ],
+        'statistics' => [
+            'total_listings' => 25,
+            'active_listings' => 18,
+            'pending_approval' => 4,
+            'expired_listings' => 3,
+            'featured_listings' => 6,
+            'this_month_revenue' => 125000
+        ]
+    ];
+
+    $this->view('admin/v_listings', $data);
+}
+
+public function edit_listing($id = null) {
+    session_start();
+    
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header('Location: ' . URLROOT . '/login');
+        exit;
+    }
+
+    if (!$id) {
+        header('Location: ' . URLROOT . '/admin/listings');
+        exit;
+    }
+
+    // Sample data - replace with actual database query
+    $data = [
+        'title' => 'Edit Stadium Listing',
+        'listing' => [
+            'id' => $id,
+            'name' => 'Colombo Cricket Ground',
+            'owner' => 'Rajesh Kumar',
+            'owner_email' => 'rajesh@email.com',
+            'type' => 'Cricket',
+            'category' => 'Outdoor',
+            'price' => 5000,
+            'location' => 'Colombo 03',
+            'address' => '123 Cricket Street, Colombo 03',
+            'description' => 'Professional cricket ground with modern facilities',
+            'features' => ['Lighting', 'Parking', 'WiFi', 'Changing Rooms'],
+            'status' => 'Active',
+            'featured' => true,
+            'images' => ['cricket-ground-1.jpg', 'cricket-ground-2.jpg'],
+            'created' => '2025-01-15',
+            'views' => 245,
+            'bookings' => 12
+        ]
+    ];
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Handle form submission
+        $data['success'] = 'Listing updated successfully!';
+    }
+
+    $this->view('admin/v_edit_listing', $data);
+}
+
 }

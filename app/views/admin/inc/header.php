@@ -43,6 +43,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo URLROOT; ?>/admin/listings" class="nav-link">
+                            <span class="nav-icon">🏟️</span>
+                            <span class="nav-text">Stadium Listings</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo URLROOT; ?>/admin/payouts" class="nav-link">
                             <span class="nav-icon">💰</span>
                             <span class="nav-text">Payouts</span>
