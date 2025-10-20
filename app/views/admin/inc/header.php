@@ -82,8 +82,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/admin/reviews" class="nav-link">
-                            <span class="nav-icon">📢</span>
+                        <a href="<?php echo URLROOT; ?>/admin/newsletter" class="nav-link">
+                            <span class="nav-icon">📧</span>
                             <span class="nav-text">Email Newsletter</span>
                         </a>
                     </li>

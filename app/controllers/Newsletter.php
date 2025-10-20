@@ -1,34 +1,62 @@
 <?php
-
+// app/controllers/Newsletter.php
 class Newsletter extends Controller {
     private $newsletterModel;
 
     public function __construct()
     {
-        session_start();
+        // Debug: Check if we reach the constructor
+        error_log('Newsletter Controller Constructor Called');
+        
+        // Start session if not already started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Debug: Check session contents
+        error_log('Session contents: ' . print_r($_SESSION, true));
         
         // Check if admin is logged in
         if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            error_log('Admin not logged in, redirecting to login');
             header('Location: ' . URLROOT . '/login');
             exit;
         }
 
-        $this->newsletterModel = $this->model('M_Newsletter');
+        // Debug: Admin is logged in
+        error_log('Admin is logged in, loading newsletter model');
+        
+        try {
+            $this->newsletterModel = $this->model('M_Newsletter');
+            error_log('Newsletter model loaded successfully');
+        } catch (Exception $e) {
+            error_log('Error loading newsletter model: ' . $e->getMessage());
+            die('Error loading newsletter model: ' . $e->getMessage());
+        }
     }
 
     public function index() {
-        // Get newsletter stats and recent activity
-        $data = [
-            'title' => 'Newsletter Management',
-            'total_subscribers' => $this->newsletterModel->getTotalSubscribers(),
-            'active_subscribers' => $this->newsletterModel->getActiveSubscribers(),
-            'newsletters_sent' => $this->newsletterModel->getNewslettersSent(),
-            'recent_newsletters' => $this->newsletterModel->getRecentNewsletters(5),
-            'subscriber_growth' => $this->newsletterModel->getSubscriberGrowth(),
-            'top_categories' => $this->newsletterModel->getTopCategories()
-        ];
+        error_log('Newsletter index method called');
+        
+        try {
+            // Get newsletter stats and recent activity
+            $data = [
+                'title' => 'Newsletter Management',
+                'total_subscribers' => $this->newsletterModel->getTotalSubscribers(),
+                'active_subscribers' => $this->newsletterModel->getActiveSubscribers(),
+                'newsletters_sent' => $this->newsletterModel->getNewslettersSent(),
+                'recent_newsletters' => $this->newsletterModel->getRecentNewsletters(5),
+                'subscriber_growth' => $this->newsletterModel->getSubscriberGrowth(),
+                'top_categories' => $this->newsletterModel->getTopCategories()
+            ];
 
-        $this->view('admin/v_newsletter', $data);
+            error_log('Newsletter data prepared, loading view');
+            $this->view('admin/v_newsletter', $data);
+            
+        } catch (Exception $e) {
+            error_log('Error in newsletter index: ' . $e->getMessage());
+            die('Error in newsletter index: ' . $e->getMessage());
+        }
     }
 
     public function subscribers() {
