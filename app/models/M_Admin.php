@@ -151,6 +151,20 @@ class M_Admin {
         return $this->db->execute();
     }
 
+    // Update user password
+    public function updateUserPassword($userId, $newPassword) {
+        $this->db->query('UPDATE users SET
+            password = :password,
+            updated_at = :updated_at
+            WHERE id = :id');
+
+        $this->db->bind(':password', password_hash($newPassword, PASSWORD_DEFAULT));
+        $this->db->bind(':updated_at', date('Y-m-d H:i:s'));
+        $this->db->bind(':id', $userId);
+
+        return $this->db->execute();
+    }
+
     // Delete user
     public function deleteUser($userId) {
         $this->db->query('DELETE FROM users WHERE id = :id');

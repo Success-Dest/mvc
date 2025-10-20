@@ -247,6 +247,7 @@ class Admin extends Controller {
         ];
 
         if (!$data['user']) {
+            $_SESSION['admin_error'] = 'User not found.';
             header('Location: ' . URLROOT . '/admin/users');
             exit;
         }
@@ -264,7 +265,10 @@ class Admin extends Controller {
             'last_name' => trim($_POST['last_name'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
             'phone' => trim($_POST['phone'] ?? ''),
-            'status' => $_POST['status'] ?? ''
+            'status' => $_POST['status'] ?? '',
+            'reset_password' => isset($_POST['reset_password']),
+            'new_password' => $_POST['new_password'] ?? '',
+            'confirm_password' => $_POST['confirm_password'] ?? ''
         ];
 
         $data['form_data'] = $formData;
@@ -290,6 +294,23 @@ class Admin extends Controller {
             $errors[] = 'Phone number is required';
         }
 
+        if (empty($formData['status'])) {
+            $errors[] = 'Status is required';
+        }
+
+        // Password validation only if reset_password is checked
+        if ($formData['reset_password']) {
+            if (empty($formData['new_password'])) {
+                $errors[] = 'New password is required when resetting password';
+            } elseif (strlen($formData['new_password']) < 6) {
+                $errors[] = 'Password must be at least 6 characters long';
+            }
+
+            if ($formData['new_password'] !== $formData['confirm_password']) {
+                $errors[] = 'Passwords do not match';
+            }
+        }
+
         // Check if email exists for other users
         if (empty($errors) && $this->adminModel->emailExistsForOtherUser($formData['email'], $userId)) {
             $errors[] = 'Email address already exists for another user';
@@ -301,9 +322,17 @@ class Admin extends Controller {
         }
 
         // Update user
-        if ($this->adminModel->updateUser($userId, $formData)) {
-            $data['success'] = 'User updated successfully!';
-            $data['user'] = $this->adminModel->getUserById($userId); // Refresh user data
+        $updateSuccess = $this->adminModel->updateUser($userId, $formData);
+        
+        // Update password if requested
+        if ($updateSuccess && $formData['reset_password']) {
+            $updateSuccess = $this->adminModel->updateUserPassword($userId, $formData['new_password']);
+        }
+
+        if ($updateSuccess) {
+            $_SESSION['admin_message'] = 'User updated successfully!';
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
         } else {
             $data['error'] = 'Failed to update user. Please try again.';
         }
