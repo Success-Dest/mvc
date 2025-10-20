@@ -751,4 +751,142 @@ public function packages() {
     $this->view('admin/v_packages', $data);
 }
 
+public function reviews() {
+    session_start();
+    
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header('Location: ' . URLROOT . '/login');
+        exit;
+    }
+
+    // Sample review data - in production this would come from database
+    $data = [
+        'title' => 'Stadium Reviews Management',
+        'reviews' => [
+            [
+                'id' => 1,
+                'stadium_name' => 'Colombo Cricket Ground',
+                'stadium_id' => 1,
+                'customer_name' => 'Krishna Wishvajith',
+                'customer_email' => 'krishna@email.com',
+                'rating' => 5,
+                'review_text' => 'Excellent facilities and well-maintained ground. The lighting system is perfect for evening matches. Highly recommend for cricket tournaments.',
+                'date' => '2025-01-20',
+                'status' => 'Published',
+                'verified_booking' => true,
+                'helpful_votes' => 15,
+                'reported' => false
+            ],
+            [
+                'id' => 2,
+                'stadium_name' => 'Football Arena Pro',
+                'stadium_id' => 3,
+                'customer_name' => 'Kulakshi Thathsarani',
+                'customer_email' => 'kulakshi@email.com',
+                'rating' => 4,
+                'review_text' => 'Great stadium with good parking facilities. Only minor issue was the changing room could be cleaner. Overall good experience.',
+                'date' => '2025-01-18',
+                'status' => 'Published',
+                'verified_booking' => true,
+                'helpful_votes' => 8,
+                'reported' => false
+            ],
+            [
+                'id' => 3,
+                'stadium_name' => 'Tennis Academy Courts',
+                'stadium_id' => 4,
+                'customer_name' => 'Dinesh Sulakshana',
+                'customer_email' => 'dinesh@email.com',
+                'rating' => 5,
+                'review_text' => 'Professional quality courts and excellent customer service. The coaching staff is very helpful and knowledgeable.',
+                'date' => '2025-01-17',
+                'status' => 'Published',
+                'verified_booking' => true,
+                'helpful_votes' => 22,
+                'reported' => false
+            ],
+            [
+                'id' => 4,
+                'stadium_name' => 'Basketball Hub Angoda',
+                'stadium_id' => 5,
+                'customer_name' => 'Kalana Ekanayake',
+                'customer_email' => 'kalana@email.com',
+                'rating' => 4,
+                'review_text' => 'Good value for money. The court quality is excellent and perfect for competitive games.',
+                'date' => '2025-01-15',
+                'status' => 'Published',
+                'verified_booking' => true,
+                'helpful_votes' => 6,
+                'reported' => false
+            ],
+            [
+                'id' => 5,
+                'stadium_name' => 'Indoor Sports Complex',
+                'stadium_id' => 2,
+                'customer_name' => 'Sarah Johnson',
+                'customer_email' => 'sarah@email.com',
+                'rating' => 2,
+                'review_text' => 'Very disappointing experience. The facility was not clean and staff was unprofessional. Would not recommend.',
+                'date' => '2025-01-14',
+                'status' => 'Flagged',
+                'verified_booking' => true,
+                'helpful_votes' => 3,
+                'reported' => true
+            ],
+            [
+                'id' => 6,
+                'stadium_name' => 'Swimming Pool Complex',
+                'stadium_id' => 6,
+                'customer_name' => 'Mike Wilson',
+                'customer_email' => 'mike@email.com',
+                'rating' => 5,
+                'review_text' => 'Amazing swimming facility with clean water and excellent maintenance. The Olympic-size pool is perfect for serious training.',
+                'date' => '2025-01-12',
+                'status' => 'Published',
+                'verified_booking' => true,
+                'helpful_votes' => 18,
+                'reported' => false
+            ],
+            [
+                'id' => 7,
+                'stadium_name' => 'Colombo Badminton Center',
+                'stadium_id' => 7,
+                'customer_name' => 'Priya Raj',
+                'customer_email' => 'priya@email.com',
+                'rating' => 3,
+                'review_text' => 'Average facility. Courts are okay but could use better lighting. Service is decent.',
+                'date' => '2025-01-10',
+                'status' => 'Pending',
+                'verified_booking' => false,
+                'helpful_votes' => 2,
+                'reported' => false
+            ],
+            [
+                'id' => 8,
+                'stadium_name' => 'Premier Squash Courts',
+                'stadium_id' => 8,
+                'customer_name' => 'John Silva',
+                'customer_email' => 'john@email.com',
+                'rating' => 1,
+                'review_text' => 'Terrible experience! Courts were dirty and equipment was broken. Staff was rude and unprofessional. Waste of money!',
+                'date' => '2025-01-08',
+                'status' => 'Flagged',
+                'verified_booking' => true,
+                'helpful_votes' => 0,
+                'reported' => true
+            ]
+        ],
+        'stats' => [
+            'total_reviews' => 156,
+            'published_reviews' => 142,
+            'pending_reviews' => 8,
+            'flagged_reviews' => 6,
+            'average_rating' => 4.2,
+            'this_month_reviews' => 23
+        ]
+    ];
+
+    $this->view('admin/v_reviews', $data);
+}
+
 }
