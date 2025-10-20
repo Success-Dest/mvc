@@ -43,6 +43,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo URLROOT; ?>/admin/packages" class="nav-link">
+                            <span class="nav-icon">📦</span>
+                            <span class="nav-text">Packages</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo URLROOT; ?>/admin/listings" class="nav-link">
                             <span class="nav-icon">🏟️</span>
                             <span class="nav-text">Stadium Listings</span>

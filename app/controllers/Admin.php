@@ -660,4 +660,95 @@ public function edit_listing($id = null) {
     $this->view('admin/v_edit_listing', $data);
 }
 
+public function packages() {
+    session_start();
+    
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header('Location: ' . URLROOT . '/login');
+        exit;
+    }
+
+    // Sample package data - later you can fetch from database
+    $data = [
+        'title' => 'Package Management',
+        'packages' => [
+            'basic' => [
+                'id' => 1,
+                'name' => 'Basic',
+                'monthly_fee' => 0,
+                'commission_rate' => 8,
+                'stadium_limit' => 3,
+                'photos_limit' => 3,
+                'videos_limit' => 3,
+                'featured_limit' => 0,
+                'support_level' => 'email',
+                'features' => [
+                    'booking_management' => true,
+                    'payment_processing' => true,
+                    'advanced_analytics' => false,
+                    'marketing_tools' => false,
+                    'api_access' => false
+                ],
+                'description' => 'Perfect for getting started with stadium rentals',
+                'status' => 'active',
+                'users_count' => 25
+            ],
+            'standard' => [
+                'id' => 2,
+                'name' => 'Standard',
+                'monthly_fee' => 0,
+                'commission_rate' => 12,
+                'stadium_limit' => 6,
+                'photos_limit' => 5,
+                'videos_limit' => 5,
+                'featured_limit' => 3,
+                'support_level' => 'phone',
+                'features' => [
+                    'booking_management' => true,
+                    'payment_processing' => true,
+                    'advanced_analytics' => true,
+                    'marketing_tools' => true,
+                    'api_access' => false
+                ],
+                'description' => 'Ideal for growing stadium businesses',
+                'status' => 'active',
+                'users_count' => 15,
+                'popular' => true
+            ],
+            'gold' => [
+                'id' => 3,
+                'name' => 'Gold',
+                'monthly_fee' => 0,
+                'commission_rate' => 20,
+                'stadium_limit' => 999, // unlimited
+                'photos_limit' => 10,
+                'videos_limit' => 5,
+                'featured_limit' => 5,
+                'support_level' => 'priority',
+                'features' => [
+                    'booking_management' => true,
+                    'payment_processing' => true,
+                    'advanced_analytics' => true,
+                    'marketing_tools' => true,
+                    'api_access' => true,
+                    'dedicated_manager' => true
+                ],
+                'description' => 'For established stadium owners who want maximum exposure',
+                'status' => 'active',
+                'users_count' => 5,
+                'premium' => true
+            ]
+        ],
+        'statistics' => [
+            'total_packages' => 3,
+            'active_packages' => 3,
+            'total_users' => 45,
+            'monthly_revenue' => 125000,
+            'avg_commission_rate' => 13.3
+        ]
+    ];
+
+    $this->view('admin/v_packages', $data);
+}
+
 }
