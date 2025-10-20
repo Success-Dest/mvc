@@ -228,7 +228,7 @@
     gap: 12px;
     justify-content: flex-end;
     padding-top: 24px;
-    border-top: 1px solid #eee;
+    
 }
 
 .btn-cancel, .btn-save {
