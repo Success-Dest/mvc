@@ -271,7 +271,10 @@ class Register extends Controller {
                     header('Location: ' . URLROOT . '/register/success');
                     exit;
                 } else {
-                    $data['error'] = 'Account created but profile setup failed. Please contact support.';
+                    // If profile creation failed, delete the user to maintain consistency
+                    error_log('Profile creation failed, rolling back user creation');
+                    $this->registerModel->deleteUser($userId);
+                    $data['error'] = 'Registration failed. Please check all required fields and try again.';
                 }
             } else {
                 $data['error'] = 'Registration failed. Please try again.';
@@ -283,7 +286,7 @@ class Register extends Controller {
         } catch (Exception $e) {
             error_log('ProcessRegistration Error: ' . $e->getMessage());
             error_log('Error trace: ' . $e->getTraceAsString());
-            $data['error'] = 'Registration failed due to a technical error. Please try again.';
+            $data['error'] = 'Registration failed due to a technical error. Please check the error logs for details.';
             return $data;
         }
     }

@@ -26,169 +26,207 @@ class M_Register {
 
     // Create a new user account
     public function createUser($userData) {
-        $this->db->query('INSERT INTO users (
-            first_name, 
-            last_name, 
-            email, 
-            phone, 
-            password, 
-            role, 
-            status, 
-            created_at
-        ) VALUES (
-            :first_name, 
-            :last_name, 
-            :email, 
-            :phone, 
-            :password, 
-            :role, 
-            :status, 
-            :created_at
-        )');
+        try {
+            $this->db->query('INSERT INTO users (
+                first_name, 
+                last_name, 
+                email, 
+                phone, 
+                password, 
+                role, 
+                status, 
+                created_at
+            ) VALUES (
+                :first_name, 
+                :last_name, 
+                :email, 
+                :phone, 
+                :password, 
+                :role, 
+                :status, 
+                :created_at
+            )');
 
-        // Bind parameters
-        $this->db->bind(':first_name', $userData['first_name']);
-        $this->db->bind(':last_name', $userData['last_name']);
-        $this->db->bind(':email', $userData['email']);
-        $this->db->bind(':phone', $userData['phone']);
-        $this->db->bind(':password', password_hash($userData['password'], PASSWORD_DEFAULT));
-        $this->db->bind(':role', $userData['role']);
-        $this->db->bind(':status', 'active'); // Set all accounts to active immediately
-        $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+            // Bind parameters
+            $this->db->bind(':first_name', $userData['first_name']);
+            $this->db->bind(':last_name', $userData['last_name']);
+            $this->db->bind(':email', $userData['email']);
+            $this->db->bind(':phone', $userData['phone']);
+            $this->db->bind(':password', password_hash($userData['password'], PASSWORD_DEFAULT));
+            $this->db->bind(':role', $userData['role']);
+            $this->db->bind(':status', 'active'); // Set all accounts to active immediately
+            $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
-        // Execute
-        if ($this->db->execute()) {
-            // Return the newly created user ID
-            return $this->db->lastInsertId();
+            // Execute
+            if ($this->db->execute()) {
+                // Return the newly created user ID
+                return $this->db->lastInsertId();
+            }
+            return false;
+        } catch (Exception $e) {
+            error_log('Create User Error: ' . $e->getMessage());
+            return false;
         }
-        return false;
     }
 
     // Create customer profile
     public function createCustomerProfile($userId, $profileData) {
-        $this->db->query('INSERT INTO customer_profiles (
-            user_id,
-            district,
-            sports,
-            age_group,
-            skill_level,
-            created_at
-        ) VALUES (
-            :user_id,
-            :district,
-            :sports,
-            :age_group,
-            :skill_level,
-            :created_at
-        )');
+        try {
+            $this->db->query('INSERT INTO customer_profiles (
+                user_id,
+                district,
+                sports,
+                age_group,
+                skill_level,
+                created_at
+            ) VALUES (
+                :user_id,
+                :district,
+                :sports,
+                :age_group,
+                :skill_level,
+                :created_at
+            )');
 
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':district', $profileData['district']);
-        $this->db->bind(':sports', $profileData['sports']);
-        $this->db->bind(':age_group', $profileData['age_group']);
-        $this->db->bind(':skill_level', $profileData['skill_level']);
-        $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+            $this->db->bind(':user_id', $userId);
+            $this->db->bind(':district', $profileData['district']);
+            $this->db->bind(':sports', $profileData['sports']);
+            $this->db->bind(':age_group', $profileData['age_group']);
+            $this->db->bind(':skill_level', $profileData['skill_level']);
+            $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
-        return $this->db->execute();
+            return $this->db->execute();
+        } catch (Exception $e) {
+            error_log('Create Customer Profile Error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     // Create stadium owner profile
     public function createStadiumOwnerProfile($userId, $profileData) {
-        $this->db->query('INSERT INTO stadium_owner_profiles (
-            user_id,
-            owner_name,
-            business_name,
-            district,
-            venue_type,
-            business_registration,
-            created_at
-        ) VALUES (
-            :user_id,
-            :owner_name,
-            :business_name,
-            :district,
-            :venue_type,
-            :business_registration,
-            :created_at
-        )');
+        try {
+            $this->db->query('INSERT INTO stadium_owner_profiles (
+                user_id,
+                owner_name,
+                business_name,
+                district,
+                venue_type,
+                business_registration,
+                created_at
+            ) VALUES (
+                :user_id,
+                :owner_name,
+                :business_name,
+                :district,
+                :venue_type,
+                :business_registration,
+                :created_at
+            )');
 
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':owner_name', $profileData['owner_name']);
-        $this->db->bind(':business_name', $profileData['business_name']);
-        $this->db->bind(':district', $profileData['district']);
-        $this->db->bind(':venue_type', $profileData['venue_type']);
-        $this->db->bind(':business_registration', $profileData['business_reg']);
-        $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+            $this->db->bind(':user_id', $userId);
+            $this->db->bind(':owner_name', $profileData['owner_name']);
+            $this->db->bind(':business_name', $profileData['business_name']);
+            $this->db->bind(':district', $profileData['district']);
+            $this->db->bind(':venue_type', $profileData['venue_type']);
+            $this->db->bind(':business_registration', $profileData['business_reg']);
+            $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
-        return $this->db->execute();
+            return $this->db->execute();
+        } catch (Exception $e) {
+            error_log('Create Stadium Owner Profile Error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     // Create coach profile
     public function createCoachProfile($userId, $profileData) {
-        $this->db->query('INSERT INTO coach_profiles (
-            user_id,
-            specialization,
-            experience,
-            certification,
-            coaching_type,
-            district,
-            availability,
-            created_at
-        ) VALUES (
-            :user_id,
-            :specialization,
-            :experience,
-            :certification,
-            :coaching_type,
-            :district,
-            :availability,
-            :created_at
-        )');
+        try {
+            $this->db->query('INSERT INTO coach_profiles (
+                user_id,
+                specialization,
+                experience,
+                certification,
+                coaching_type,
+                district,
+                availability,
+                created_at
+            ) VALUES (
+                :user_id,
+                :specialization,
+                :experience,
+                :certification,
+                :coaching_type,
+                :district,
+                :availability,
+                :created_at
+            )');
 
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':specialization', $profileData['specialization']);
-        $this->db->bind(':experience', $profileData['experience']);
-        $this->db->bind(':certification', $profileData['certification']);
-        $this->db->bind(':coaching_type', $profileData['coaching_type']);
-        $this->db->bind(':district', $profileData['district']);
-        $this->db->bind(':availability', $profileData['availability']);
-        $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+            $this->db->bind(':user_id', $userId);
+            $this->db->bind(':specialization', $profileData['specialization']);
+            $this->db->bind(':experience', $profileData['experience']);
+            $this->db->bind(':certification', $profileData['certification']);
+            $this->db->bind(':coaching_type', $profileData['coaching_type']);
+            $this->db->bind(':district', $profileData['district']);
+            $this->db->bind(':availability', $profileData['availability']);
+            $this->db->bind(':created_at', date('Y-m-d H:i:s'));
 
-        return $this->db->execute();
+            return $this->db->execute();
+        } catch (Exception $e) {
+            error_log('Create Coach Profile Error: ' . $e->getMessage());
+            return false;
+        }
     }
 
-    // Create rental owner profile
+    // Create rental owner profile - FIXED
     public function createRentalOwnerProfile($userId, $profileData) {
-        $this->db->query('INSERT INTO rental_owner_profiles (
-            user_id,
-            owner_name,
-            business_name,
-            district,
-            business_type,
-            equipment_categories,
-            delivery_service,
-            created_at
-        ) VALUES (
-            :user_id,
-            :owner_name,
-            :business_name,
-            :district,
-            :business_type,
-            :equipment_categories,
-            :delivery_service,
-            :created_at
-        )');
+        try {
+            // Debug: Log the data being inserted
+            error_log('Creating rental owner profile for user ID: ' . $userId);
+            error_log('Profile data: ' . print_r($profileData, true));
 
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':owner_name', $profileData['owner_name']);
-        $this->db->bind(':business_name', $profileData['business_name']);
-        $this->db->bind(':district', $profileData['district']);
-        $this->db->bind(':business_type', $profileData['business_type']);
-        $this->db->bind(':equipment_categories', $profileData['equipment_categories']);
-        $this->db->bind(':delivery_service', $profileData['delivery_service']);
-        $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+            $this->db->query('INSERT INTO rental_owner_profiles (
+                user_id,
+                owner_name,
+                business_name,
+                district,
+                business_type,
+                equipment_categories,
+                delivery_service,
+                created_at
+            ) VALUES (
+                :user_id,
+                :owner_name,
+                :business_name,
+                :district,
+                :business_type,
+                :equipment_categories,
+                :delivery_service,
+                :created_at
+            )');
 
-        return $this->db->execute();
+            $this->db->bind(':user_id', $userId);
+            $this->db->bind(':owner_name', $profileData['owner_name']);
+            $this->db->bind(':business_name', $profileData['business_name']);
+            $this->db->bind(':district', $profileData['district']);
+            $this->db->bind(':business_type', $profileData['business_type']);
+            $this->db->bind(':equipment_categories', $profileData['equipment_categories']);
+            $this->db->bind(':delivery_service', $profileData['delivery_service']);
+            $this->db->bind(':created_at', date('Y-m-d H:i:s'));
+
+            $result = $this->db->execute();
+            
+            if (!$result) {
+                error_log('Failed to create rental owner profile');
+            } else {
+                error_log('Successfully created rental owner profile');
+            }
+            
+            return $result;
+        } catch (Exception $e) {
+            error_log('Create Rental Owner Profile Error: ' . $e->getMessage());
+            error_log('Error details: ' . $e->getTraceAsString());
+            return false;
+        }
     }
 
     // Send welcome email (placeholder)

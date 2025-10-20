@@ -13,53 +13,60 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>BookMyGround.lk</h2>
-                <span class="admin-badge">Admin Panel</span>
+                <span class="admin-badge">Rental Owner Panel</span>
             </div>
             
             <nav class="sidebar-nav">
                 <ul>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/RentalOwnerController" class="nav-link">
+                        <a href="<?php echo URLROOT; ?>/rentalowner" class="nav-link">
                             <span class="nav-icon">📊</span>
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/RentalOwnerController/shopManagement" class="nav-link">
-                            <span class="nav-icon">👥</span>
-                            <span class="nav-text">Manage your shops</span>
+                        <a href="<?php echo URLROOT; ?>/rentalowner/shopManagement" class="nav-link">
+                            <span class="nav-icon">🏬</span>
+                            <span class="nav-text">Manage Shops</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/RentalOwnerController/messages" class="nav-link">
+                        <a href="<?php echo URLROOT; ?>/rentalowner/messages" class="nav-link">
                             <span class="nav-icon">💬</span>
                             <span class="nav-text">Messages</span>
                             <span class="badge">3</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/RentalOwnerController/advertisment" class="nav-link">
+                        <a href="<?php echo URLROOT; ?>/rentalowner/advertisment" class="nav-link">
                             <span class="nav-icon">📢</span>
                             <span class="nav-text">Advertisements</span>
                             <span class="badge">3</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo URLROOT; ?>/RentalOwnerController/blog" class="nav-link">
+                        <a href="<?php echo URLROOT; ?>/rentalowner/blog" class="nav-link">
                             <span class="nav-icon">📝</span>
                             <span class="nav-text">Blog</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<?php echo URLROOT; ?>/rentalowner/profile" class="nav-link">
+                            <span class="nav-icon">👤</span>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li>
+                </ul>
             </nav>
             
             <div class="sidebar-footer">
                 <div class="admin-profile">
                     <div class="profile-info">
-                        <h4>Administrator</h4>
-                        <p>admin@bookmyground.lk</p>
+                        <h4><?php echo Auth::getUserFirstName() . ' ' . Auth::getUserLastName(); ?></h4>
+                        <p><?php echo Auth::getUserEmail(); ?></p>
                     </div>
                 </div>
-                <a href="<?php echo URLROOT; ?>/admin/logout" class="logout-btn">Logout</a>
+                <a href="<?php echo URLROOT; ?>/rentalowner/logout" class="logout-btn">Logout</a>
             </div>
         </aside>
 

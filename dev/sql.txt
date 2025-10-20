@@ -467,3 +467,25 @@ INSERT INTO stadium_owner_profiles (user_id, owner_name, business_name, district
 -- Test credentials:
 -- Email: owner@test.com
 -- Password:
+
+
+
+
+Rental Owner Issue Fix:
+
+-- Fix rental_owner_profiles table structure
+DROP TABLE IF EXISTS rental_owner_profiles;
+
+CREATE TABLE rental_owner_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    owner_name VARCHAR(255) NOT NULL,
+    business_name VARCHAR(255) NOT NULL,
+    district VARCHAR(100) NOT NULL,
+    business_type VARCHAR(100) NOT NULL,
+    equipment_categories VARCHAR(255) NOT NULL,
+    delivery_service ENUM('yes', 'no', 'conditional', 'paid') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
