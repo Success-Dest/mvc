@@ -153,7 +153,7 @@ class Login extends Controller {
                 header('Location: ' . URLROOT . '/coach');
                 break;
             case 'rental_owner':
-                header('Location: ' . URLROOT . '/rental_owner');
+                header('Location: ' . URLROOT . '/rentalowner');
                 break;
             case 'admin':
                 header('Location: ' . URLROOT . '/admin');
