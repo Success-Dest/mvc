@@ -284,7 +284,7 @@ setTimeout(function() {
 
 .card-header {
     padding: 20px;
-    border-bottom: 1px solid #666666ff;
+    border-bottom: 1px solid #3b3b3bff;
     display: flex;
     justify-content: between;
     align-items: center;
@@ -313,7 +313,7 @@ setTimeout(function() {
 .data-table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #666666ff;
+    border-bottom: 1px solid #3b3b3bff;
 }
 
 .data-table th {
