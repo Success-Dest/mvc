@@ -82,6 +82,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo URLROOT; ?>/admin/reviews" class="nav-link">
+                            <span class="nav-icon">📢</span>
+                            <span class="nav-text">Email Newsletter</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo URLROOT; ?>/admin/content" class="nav-link">
                             <span class="nav-icon">⚙️</span>
                             <span class="nav-text">Home Page Management</span>
