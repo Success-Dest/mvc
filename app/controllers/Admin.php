@@ -20,7 +20,7 @@ class Admin extends Controller {
         // Dashboard data
         $data = [
             'title' => 'Admin Dashboard',
-            'total_users' => 1250,
+            'total_users' => $this->adminModel->getTotalUsers(),
             'total_bookings' => 340,
             'monthly_revenue' => 85000,
             'pending_payouts' => 65000,
@@ -71,18 +71,290 @@ class Admin extends Controller {
             exit;
         }
 
+        // Get all users from database
+        $users = $this->adminModel->getAllUsers();
+
         $data = [
             'title' => 'User Management',
-            'users' => [
-                ['id' => 1, 'name' => 'Kulakshi Thathsarani', 'email' => 'john@example.com', 'role' => 'Customer', 'status' => 'Active'],
-                ['id' => 2, 'name' => 'University Of Colombo', 'email' => 'owner1@example.com', 'role' => 'Stadium Owner', 'status' => 'Active'],
-                ['id' => 3, 'name' => 'Dinesh Sulakshana', 'email' => 'coach@example.com', 'role' => 'Coach', 'status' => 'Active'],
-                ['id' => 4, 'name' => 'Kalana Ekanayake', 'email' => 'rental@example.com', 'role' => 'Rental Owner', 'status' => 'Active'],
-                ['id' => 5, 'name' => 'Kamal Jayasooriya', 'email' => 'jane@example.com', 'role' => 'Customer', 'status' => 'Inactive']
-            ]
+            'users' => $users
         ];
 
         $this->view('admin/v_users', $data);
+    }
+
+    public function add_user() {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        $data = [
+            'title' => 'Add New User',
+            'error' => '',
+            'success' => '',
+            'form_data' => []
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = $this->processAddUser($data);
+        }
+
+        $this->view('admin/v_add_user', $data);
+    }
+
+    private function processAddUser($data) {
+        // Get and validate form data
+        $formData = [
+            'first_name' => trim($_POST['first_name'] ?? ''),
+            'last_name' => trim($_POST['last_name'] ?? ''),
+            'email' => trim($_POST['email'] ?? ''),
+            'phone' => trim($_POST['phone'] ?? ''),
+            'role' => $_POST['role'] ?? '',
+            'password' => $_POST['password'] ?? '',
+            'confirm_password' => $_POST['confirm_password'] ?? ''
+        ];
+
+        $data['form_data'] = $formData;
+
+        // Validation
+        $errors = [];
+
+        if (empty($formData['first_name'])) {
+            $errors[] = 'First name is required';
+        }
+
+        if (empty($formData['last_name'])) {
+            $errors[] = 'Last name is required';
+        }
+
+        if (empty($formData['email'])) {
+            $errors[] = 'Email is required';
+        } elseif (!filter_var($formData['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid email address';
+        }
+
+        if (empty($formData['phone'])) {
+            $errors[] = 'Phone number is required';
+        }
+
+        if (empty($formData['role'])) {
+            $errors[] = 'Please select a role';
+        } elseif (!in_array($formData['role'], ['customer', 'stadium_owner', 'coach', 'rental_owner'])) {
+            $errors[] = 'Invalid role selected';
+        }
+
+        if (empty($formData['password'])) {
+            $errors[] = 'Password is required';
+        } elseif (strlen($formData['password']) < 6) {
+            $errors[] = 'Password must be at least 6 characters long';
+        }
+
+        if ($formData['password'] !== $formData['confirm_password']) {
+            $errors[] = 'Passwords do not match';
+        }
+
+        // Check if email already exists
+        if (empty($errors) && $this->adminModel->emailExists($formData['email'])) {
+            $errors[] = 'Email address already exists';
+        }
+
+        if (!empty($errors)) {
+            $data['error'] = implode('<br>', $errors);
+            return $data;
+        }
+
+        // Create user
+        $userId = $this->adminModel->createUser($formData);
+
+        if ($userId) {
+            // Create role-specific profile if needed
+            $this->createRoleProfile($userId, $formData);
+            
+            $data['success'] = 'User created successfully!';
+            $data['form_data'] = []; // Clear form data on success
+        } else {
+            $data['error'] = 'Failed to create user. Please try again.';
+        }
+
+        return $data;
+    }
+
+    private function createRoleProfile($userId, $formData) {
+        // Create basic profiles for different roles
+        // This can be expanded later with more specific fields
+        switch($formData['role']) {
+            case 'customer':
+                $this->adminModel->createCustomerProfile($userId, [
+                    'district' => 'Not specified',
+                    'sports' => 'Not specified',
+                    'age_group' => 'under_18',
+                    'skill_level' => 'beginner'
+                ]);
+                break;
+            case 'stadium_owner':
+                $this->adminModel->createStadiumOwnerProfile($userId, [
+                    'owner_name' => $formData['first_name'] . ' ' . $formData['last_name'],
+                    'business_name' => 'Not specified',
+                    'district' => 'Not specified',
+                    'venue_type' => 'stadium',
+                    'business_registration' => 'Not specified'
+                ]);
+                break;
+            case 'coach':
+                $this->adminModel->createCoachProfile($userId, [
+                    'specialization' => 'Not specified',
+                    'experience' => '1_3',
+                    'certification' => 'basic',
+                    'coaching_type' => 'individual',
+                    'district' => 'Not specified',
+                    'availability' => 'part_time'
+                ]);
+                break;
+            case 'rental_owner':
+                $this->adminModel->createRentalOwnerProfile($userId, [
+                    'owner_name' => $formData['first_name'] . ' ' . $formData['last_name'],
+                    'business_name' => 'Not specified',
+                    'district' => 'Not specified',
+                    'business_type' => 'independent',
+                    'equipment_categories' => 'Not specified',
+                    'delivery_service' => 'no'
+                ]);
+                break;
+        }
+    }
+
+    public function edit_user($id = null) {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        if (!$id) {
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
+        }
+
+        $data = [
+            'title' => 'Edit User',
+            'error' => '',
+            'success' => '',
+            'user' => $this->adminModel->getUserById($id),
+            'form_data' => []
+        ];
+
+        if (!$data['user']) {
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = $this->processEditUser($data, $id);
+        }
+
+        $this->view('admin/v_edit_user', $data);
+    }
+
+    private function processEditUser($data, $userId) {
+        $formData = [
+            'first_name' => trim($_POST['first_name'] ?? ''),
+            'last_name' => trim($_POST['last_name'] ?? ''),
+            'email' => trim($_POST['email'] ?? ''),
+            'phone' => trim($_POST['phone'] ?? ''),
+            'status' => $_POST['status'] ?? ''
+        ];
+
+        $data['form_data'] = $formData;
+
+        // Validation
+        $errors = [];
+
+        if (empty($formData['first_name'])) {
+            $errors[] = 'First name is required';
+        }
+
+        if (empty($formData['last_name'])) {
+            $errors[] = 'Last name is required';
+        }
+
+        if (empty($formData['email'])) {
+            $errors[] = 'Email is required';
+        } elseif (!filter_var($formData['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid email address';
+        }
+
+        if (empty($formData['phone'])) {
+            $errors[] = 'Phone number is required';
+        }
+
+        // Check if email exists for other users
+        if (empty($errors) && $this->adminModel->emailExistsForOtherUser($formData['email'], $userId)) {
+            $errors[] = 'Email address already exists for another user';
+        }
+
+        if (!empty($errors)) {
+            $data['error'] = implode('<br>', $errors);
+            return $data;
+        }
+
+        // Update user
+        if ($this->adminModel->updateUser($userId, $formData)) {
+            $data['success'] = 'User updated successfully!';
+            $data['user'] = $this->adminModel->getUserById($userId); // Refresh user data
+        } else {
+            $data['error'] = 'Failed to update user. Please try again.';
+        }
+
+        return $data;
+    }
+
+    public function delete_user($id = null) {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        if (!$id) {
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
+        }
+
+        if ($this->adminModel->deleteUser($id)) {
+            $_SESSION['admin_message'] = 'User deleted successfully!';
+        } else {
+            $_SESSION['admin_error'] = 'Failed to delete user.';
+        }
+
+        header('Location: ' . URLROOT . '/admin/users');
+        exit;
+    }
+
+    public function toggle_user_status($id = null) {
+        session_start();
+        
+        if (!isset($_SESSION['admin_logged_in'])) {
+            header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        if (!$id) {
+            header('Location: ' . URLROOT . '/admin/users');
+            exit;
+        }
+
+        if ($this->adminModel->toggleUserStatus($id)) {
+            $_SESSION['admin_message'] = 'User status updated successfully!';
+        } else {
+            $_SESSION['admin_error'] = 'Failed to update user status.';
+        }
+
+        header('Location: ' . URLROOT . '/admin/users');
+        exit;
     }
 
     public function bookings() {
