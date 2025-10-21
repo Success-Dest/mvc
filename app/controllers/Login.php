@@ -150,7 +150,7 @@ class Login extends Controller {
                 header('Location: ' . URLROOT . '/stadium_owner');
                 break;
             case 'coach':
-                header('Location: ' . URLROOT . '/coach');
+                header('Location: ' . URLROOT . '/coachdash'); // FIXED: Changed from /coach to /coachdash
                 break;
             case 'rental_owner':
                 header('Location: ' . URLROOT . '/rentalowner');

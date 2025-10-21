@@ -489,3 +489,22 @@ CREATE TABLE rental_owner_profiles (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+
+coaches table issue fixing 
+DROP TABLE IF EXISTS coach_profiles;
+
+CREATE TABLE coach_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    specialization VARCHAR(100) NOT NULL,
+    experience ENUM('1_3', '4_6', '7_10', '11_15', '15_plus') NOT NULL,
+    certification ENUM('none', 'basic', 'intermediate', 'advanced', 'professional', 'international') NOT NULL,
+    coaching_type ENUM('individual', 'group', 'team', 'both', 'all') NOT NULL,
+    district VARCHAR(100) NOT NULL,
+    availability ENUM('full_time', 'part_time', 'weekends', 'evenings', 'flexible') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
