@@ -145,14 +145,45 @@ class Register extends Controller {
             
             // Get form data based on role
             $formData = [
-                'role' => $role,
-                'first_name' => trim($_POST['first_name'] ?? $_POST['first-name'] ?? ''),
-                'last_name' => trim($_POST['last_name'] ?? $_POST['last-name'] ?? ''),
-                'email' => trim($_POST['email'] ?? ''),
-                'phone' => trim($_POST['phone'] ?? ''),
-                'password' => $_POST['password'] ?? '',
-                'confirm_password' => $_POST['confirm_password'] ?? $_POST['confirm-password'] ?? ''
+                'role' => $role
             ];
+
+            // Get basic fields differently for each role
+            switch($role) {
+                case 'customer':
+                    $formData['first_name'] = trim($_POST['first_name'] ?? $_POST['first-name'] ?? '');
+                    $formData['last_name'] = trim($_POST['last_name'] ?? $_POST['last-name'] ?? '');
+                    break;
+                    
+                case 'stadium_owner':
+                    // For stadium owner, we get owner_name and split it into first_name/last_name
+                    $ownerName = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
+                    $nameParts = explode(' ', $ownerName, 2);
+                    $formData['first_name'] = $nameParts[0] ?? '';
+                    $formData['last_name'] = $nameParts[1] ?? '';
+                    $formData['owner_name'] = $ownerName; // Keep for profile creation
+                    break;
+                    
+                case 'coach':
+                    $formData['first_name'] = trim($_POST['first_name'] ?? $_POST['first-name'] ?? '');
+                    $formData['last_name'] = trim($_POST['last_name'] ?? $_POST['last-name'] ?? '');
+                    break;
+                    
+                case 'rental_owner':
+                    // For rental owner, we get owner_name and split it into first_name/last_name
+                    $ownerName = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
+                    $nameParts = explode(' ', $ownerName, 2);
+                    $formData['first_name'] = $nameParts[0] ?? '';
+                    $formData['last_name'] = $nameParts[1] ?? '';
+                    $formData['owner_name'] = $ownerName; // Keep for profile creation
+                    break;
+            }
+
+            // Common fields for all roles
+            $formData['email'] = trim($_POST['email'] ?? '');
+            $formData['phone'] = trim($_POST['phone'] ?? '');
+            $formData['password'] = $_POST['password'] ?? '';
+            $formData['confirm_password'] = $_POST['confirm_password'] ?? $_POST['confirm-password'] ?? '';
 
             // Add role-specific fields
             switch($role) {
@@ -164,7 +195,6 @@ class Register extends Controller {
                     break;
 
                 case 'stadium_owner':
-                    $formData['owner_name'] = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
                     $formData['business_name'] = trim($_POST['business_name'] ?? $_POST['business-name'] ?? '');
                     $formData['district'] = trim($_POST['district'] ?? '');
                     $formData['venue_type'] = $_POST['venue_type'] ?? $_POST['venue-type'] ?? '';
@@ -181,7 +211,6 @@ class Register extends Controller {
                     break;
 
                 case 'rental_owner':
-                    $formData['owner_name'] = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
                     $formData['business_name'] = trim($_POST['business_name'] ?? $_POST['business-name'] ?? '');
                     $formData['district'] = trim($_POST['district'] ?? '');
                     $formData['business_type'] = $_POST['business_type'] ?? $_POST['business-type'] ?? '';
