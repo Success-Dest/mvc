@@ -160,7 +160,8 @@ class Register extends Controller {
                     $ownerName = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
                     $nameParts = explode(' ', $ownerName, 2);
                     $formData['first_name'] = $nameParts[0] ?? '';
-                    $formData['last_name'] = $nameParts[1] ?? '';
+                    // FIXED: Ensure last_name is never empty
+                    $formData['last_name'] = !empty($nameParts[1]) ? $nameParts[1] : $nameParts[0];
                     $formData['owner_name'] = $ownerName; // Keep for profile creation
                     break;
                     
@@ -174,7 +175,8 @@ class Register extends Controller {
                     $ownerName = trim($_POST['owner_name'] ?? $_POST['owner-name'] ?? '');
                     $nameParts = explode(' ', $ownerName, 2);
                     $formData['first_name'] = $nameParts[0] ?? '';
-                    $formData['last_name'] = $nameParts[1] ?? '';
+                    // FIXED: Ensure last_name is never empty
+                    $formData['last_name'] = !empty($nameParts[1]) ? $nameParts[1] : $nameParts[0];
                     $formData['owner_name'] = $ownerName; // Keep for profile creation
                     break;
             }

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Stadium Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Navigation Header */
+        .navbar {
+            background: #1a1a1a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ff00;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #00ff00;
+        }
+
+        .login-btn {
+            background: #00ff00;
+            color: #000;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #00cc00;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d4d0d 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 2px solid #00ff00;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #00ff00;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Contact Info Cards */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #00ff00;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,255,0,0.2);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .info-content a {
+            color: #00cc00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Form */
+        .contact-form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 2px solid #e9ecef;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: #00ff00;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00ff00;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            color: #000;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            border-left: 4px solid #00ff00;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Office Hours Section */
+        .office-hours {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #00ff00;
+        }
+
+        .day {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .time {
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #00ff00;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00ff00;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: #00ff00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #00cc00;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            margin-top: 2rem;
+            color: #bdc3c7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">StadiumBook</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/stadiums">Stadiums</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact" class="active">Contact</a></li>
+            </ul>
+            <a href="/login" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Contact Us</h1>
+            <p class="page-subtitle">Have questions about stadium bookings? We're here to help! Reach out to us and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <!-- Contact Information & Form -->
+        <div class="contact-wrapper">
+            <!-- Contact Information Cards -->
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">📧</div>
+                    <div class="info-content">
+                        <h3>Email Us</h3>
+                        <p>For general inquiries and booking support</p>
+                        <a href="mailto:info@stadiumbook.com">info@stadiumbook.com</a>
+                        <br>
+                        <a href="mailto:support@stadiumbook.com">support@stadiumbook.com</a>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <div class="info-content">
+                        <h3>Call Us</h3>
+                        <p>Monday to Friday, 9:00 AM - 6:00 PM</p>
+                        <a href="tel:+442012345678">+44 20 1234 5678</a>
+                        <br>
+                        <a href="tel:+442098765432">+44 20 9876 5432</a> (Support)
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h3>Visit Our Office</h3>
+                        <p>StadiumBook Headquarters<br>
+                        123 Stadium Lane<br>
+                        London, SW1A 1AA<br>
+                        United Kingdom</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+                <h2 class="form-title">Send Us a Message</h2>
+                
+                <div id="successMessage" class="success-message">
+                    ✓ Thank you! Your message has been sent successfully. We'll get back to you soon.
+                </div>
+
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject <span class="required">*</span></label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="booking">Stadium Booking Inquiry</option>
+                            <option value="pricing">Pricing Information</option>
+                            <option value="support">Technical Support</option>
+                            <option value="partnership">Partnership Opportunity</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" required placeholder="Please provide as much detail as possible..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Office Hours -->
+        <div class="office-hours">
+            <h2 class="section-title">Office Hours</h2>
+            <div class="hours-grid">
+                <div class="hours-item">
+                    <span class="day">Monday - Friday</span>
+                    <span class="time">9:00 AM - 6:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Saturday</span>
+                    <span class="time">10:00 AM - 4:00 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Sunday</span>
+                    <span class="time">Closed</span>
+                </div>
+                <div class="hours-item">
+                    <span class="day">Emergency Line</span>
+                    <span class="time">24/7 Available</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>StadiumBook</h3>
+                <p>Your premier destination for stadium bookings across the UK. Professional venues for all your sporting and event needs.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">t</a>
+                    <a href="#" class="social-link">i</a>
+                    <a href="#" class="social-link">l</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/stadiums">All Stadiums</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/support">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/cookies">Cookie Policy</a></li>
+                    <li><a href="/refund">Refund Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li>📧 info@stadiumbook.com</li>
+                    <li>📞 +44 20 1234 5678</li>
+                    <li>📍 London, United Kingdom</li>
+                    <li>🕒 Mon-Fri: 9AM-6PM</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 StadiumBook. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Log form data (in production, this would be sent to your controller)
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('show');
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+            
+            // In your MVC application, you would send this to your controller like:
+            // fetch('/contact/submit', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     if (data.success) {
+            //         successMessage.classList.add('show');
+            //         document.getElementById('contactForm').reset();
+            //     }
+            // });
+        }
+
+        // Email validation
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                this.style.borderColor = '#e74c3c';
+            } else {
+                this.style.borderColor = '#e9ecef';
+            }
+        });
+
+        // Phone number formatting (optional)
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                // Format as: +44 20 1234 5678
+                if (value.startsWith('44')) {
+                    value = '+' + value;
+                }
+            }
+            // You can add more sophisticated formatting here
+        });
+    </script>
+</body>
+</html>
